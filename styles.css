@@ -1,0 +1,101 @@
+body {
+font-family: open-sans;
+margin: auto;
+text-align: center;
+font-size: 20px;
+}
+
+/*user input section*/
+.user-input {
+  background: #E5F3F2;
+  height: ;
+  width: 100%;
+  margin: auto;
+  padding-top: 4vh;
+}
+
+header {
+  height: 50vh;
+  min-height: 25px;
+}
+
+h1 {
+  color: #6D6E71;
+  font-size: 2em;
+  font-family: Roboto Slab;
+  margin-bottom: 4vh;
+}
+
+.idea {
+  color: #00A79D;
+}
+
+.form-wrapper {
+  display: block;
+  text-align: center;
+}
+
+form {
+  margin: auto;
+  display: inline-block;
+  text-align: left;
+}
+
+input {
+  box-sizing: border-box;
+}
+
+.idea-title {
+  width: 50vh;
+  display: block;
+  padding: 2px;
+  margin: 10px;
+}
+
+.idea-body {
+  display: block;
+  width: 50vh;
+  padding: 2px;
+  margin: 10px;
+}
+
+.save-button{
+  background:#00A79D;
+  color: white;
+  display: block;
+  width: 50vh;
+  transition: background 1s;
+  padding: 2px;
+  margin: 10px;
+}
+
+.save-button:hover{
+  background:#045E55;
+}
+
+.idea-display{
+  margin: auto;
+  width: 100%;
+}
+
+.search-ideas {
+  width: 50vh;
+}
+
+.svg {
+  width: 3%;
+  transition: background 1s;
+}
+
+.delete:hover {
+  fill: red;
+
+}
+
+.upvote:hover {
+  fill: green;
+}
+
+.downvote:hover {
+  fill: yellow;
+}
