@@ -27,10 +27,10 @@ function showStorage () {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    console.log(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'
-    $('.idea-display').append(card);
-    }
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'   
+  }
+  $('.idea-display').append(card);
+    
     console.log(ideaArray)    
 }
 
