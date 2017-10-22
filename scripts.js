@@ -26,10 +26,14 @@ $saveButton.on('click', function(e) {
   clearInputs();
   ideaCard.showCard();
 })
-
+  
 function clearInputs() {
   $ideaTitle.val('');
   $ideaBody.val('');
 };
+
+$('.idea-display').on('click', '.delete', function() {
+  this.closest('div').remove();
+})
 
 });
