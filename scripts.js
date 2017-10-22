@@ -28,12 +28,10 @@ function showStorage () {
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
     console.log(parsed)
-    var card = '<div class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'
     $('.idea-display').append(card);
-
     }
-    console.log(ideaArray)  
-     
+    console.log(ideaArray)    
 }
 
 //SAVE USER INPUT TO OBJECT
@@ -41,9 +39,6 @@ $saveButton.on('click', function(e) {
   e.preventDefault();
   storeCard();
   showStorage();
-  var ideaCard = new Idea($ideaTitle.val(),$ideaBody.val()) 
-  var card = '<div class="card"><h2>'+ideaCard.title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaCard.body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'
-  $('.idea-display').append(card);
   clearInputs();
   // ideaCard.showCard();
 })
