@@ -60,8 +60,30 @@ function clearInputs() {
   $ideaBody.val('');
 };
 
+$ideaTitle.on('click', function() {
+  if ($ideaTitle.val() === "" || $ideaBody.val() === "") {
+    $saveButton.attr('disabled', true);
+  }
+  else {
+    $saveButton.removeAttr('disabled');
+  }
 });
+
+$ideaBody.on('click', function() {
+  if ($ideaTitle.val() === "" || $ideaBody.val() === "") {
+    $saveButton.attr('disabled', true);
+  }
+  else {
+    $saveButton.removeAttr('disabled');
+  }
+  });
+
+
+}); 
+// end of document
+
 
 $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
 });
+
