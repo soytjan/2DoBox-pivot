@@ -43,7 +43,6 @@ Idea.prototype.showCard = function() {
 //SAVE USER INPUT TO OBJECT
 $saveButton.on('click', function(e) {
   e.preventDefault();
-
   storeCard();
   showStorage();
   clearInputs();
@@ -55,13 +54,10 @@ function clearInputs() {
   $ideaBody.val('');
 };
 
-function clearInputs() {
-  $ideaTitle.val('');
-  $ideaBody.val('');
-};
-
-});
-
+}); //CLOSER OF THE DOCUMENT .READY FUNCTION
 $('.idea-display').on('click', '.delete', function() {
+  var parentDiv = this.closest('div');
+  parentDiv = parentDiv.id;
+  localStorage.removeItem(parentDiv);
   this.closest('div').remove();
 });
