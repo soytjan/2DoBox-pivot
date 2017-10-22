@@ -54,3 +54,7 @@ function clearInputs() {
 };
 
 });
+
+$('.idea-display').on('click', '.delete', function() {
+  this.closest('div').remove();
+})
