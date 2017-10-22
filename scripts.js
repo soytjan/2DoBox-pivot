@@ -34,14 +34,26 @@ function showStorage () {
     console.log(ideaArray)    
 }
 
+Idea.prototype.showCard = function() {
+  console.log("Hi, I'm a method added on with prototype");
+}
+
+
+
 //SAVE USER INPUT TO OBJECT
 $saveButton.on('click', function(e) {
   e.preventDefault();
+
   storeCard();
   showStorage();
   clearInputs();
   // ideaCard.showCard();
 })
+  
+function clearInputs() {
+  $ideaTitle.val('');
+  $ideaBody.val('');
+};
 
 function clearInputs() {
   $ideaTitle.val('');
@@ -50,7 +62,6 @@ function clearInputs() {
 
 });
 
-
 $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
-})
+});
