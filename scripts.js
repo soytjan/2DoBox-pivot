@@ -19,5 +19,9 @@ $saveButton.on('click', function(e) {
   $('.idea-display').append(card);
 })
 
+$('.idea-display').on('click', '.delete', function() {
+  this.closest('div').remove();
+})
+
 
 });
