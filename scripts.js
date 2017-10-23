@@ -43,7 +43,6 @@ Idea.prototype.showCard = function() {
 //SAVE USER INPUT TO OBJECT
 $saveButton.on('click', function(e) {
   e.preventDefault();
-
   storeCard();
   showStorage();
   clearInputs();
@@ -55,35 +54,11 @@ function clearInputs() {
   $ideaBody.val('');
 };
 
-function clearInputs() {
-  $ideaTitle.val('');
-  $ideaBody.val('');
-};
-
-$ideaTitle.on('click', function() {
-  if ($ideaTitle.val() === "" || $ideaBody.val() === "") {
-    $saveButton.attr('disabled', true);
-  }
-  else {
-    $saveButton.removeAttr('disabled');
-  }
-});
-
-$ideaBody.on('click', function() {
-  if ($ideaTitle.val() === "" || $ideaBody.val() === "") {
-    $saveButton.attr('disabled', true);
-  }
-  else {
-    $saveButton.removeAttr('disabled');
-  }
-  });
-
-
-}); 
-// end of document
-
+}); //CLOSER OF THE DOCUMENT .READY FUNCTION
 
 $('.idea-display').on('click', '.delete', function() {
+  var parentDiv = this.closest('div');
+  parentDiv = parentDiv.id;
+  localStorage.removeItem(parentDiv);
   this.closest('div').remove();
 });
-
