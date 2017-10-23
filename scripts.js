@@ -10,10 +10,12 @@ function Idea(title, body, id) {
   this.title = title;
   this.body = body;
   this.id = id;
+  this.quality = 1;
 }
 
-Idea.prototype.showCard = function() {
+Idea.prototype.showQuality = function() {
   console.log("Hi, I'm a method added on with prototype");
+
 }
 
 function storeCard() {
@@ -28,7 +30,7 @@ function showStorage () {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'   
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality">Swill</span> </p></div>'   
   }
   $('.idea-display').append(card);
     console.log(ideaArray)    
@@ -40,7 +42,7 @@ function showOnLoad() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality"></span> </p></div>'   
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality">Swill</span> </p></div>'   
     $('.idea-display').append(card);
   }
 }
@@ -55,7 +57,7 @@ $saveButton.on('click', function(e) {
   storeCard();
   showStorage();
   clearInputs();
-  // ideaCard.showCard();
+  // ideaCard.showQuality();
 })
   
 function clearInputs() {
@@ -70,4 +72,18 @@ $('.idea-display').on('click', '.delete', function() {
   parentDiv = parentDiv.id;
   localStorage.removeItem(parentDiv);
   this.closest('div').remove();
+});
+
+$('.idea-display').on('click', '.upvote', function() {
+  var parentDiv = this.closest('div');
+  console.log(this);
+  parentDiv = parentDiv.id;
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  console.log(parsedIdea.quality)
+  parsedIdea.quality++
+  console.log(parsedIdea.quality)
+  var stringifiedIdea = JSON.stringify(parsedIdea)
+  console.log(stringifiedIdea)
+  localStorage.setItem(parentDiv, stringifiedIdea)
+  // this.closest('div').remove();
 });
