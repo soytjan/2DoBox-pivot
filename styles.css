@@ -8,14 +8,12 @@ font-size: 20px;
 /*user input section*/
 .user-input {
   background: #E5F3F2;
-  height: ;
   width: 100%;
   margin: auto;
-  padding-top: 4vh;
+  padding-top: 20px;
 }
 
 header {
-  height: 50vh;
   min-height: 25px;
 }
 
@@ -23,7 +21,8 @@ h1 {
   color: #6D6E71;
   font-size: 2em;
   font-family: Roboto Slab;
-  margin-bottom: 4vh;
+  padding-top: 0px;
+  padding-bottom: 10px;
 }
 
 .idea {
@@ -48,12 +47,14 @@ input {
 .idea-title {
   width: 50vh;
   display: block;
+  outline-style: none;
   padding: 2px;
   margin: 10px;
 }
 
 .idea-body {
   display: block;
+  outline-style: none;
   width: 50vh;
   padding: 2px;
   margin: 10px;
@@ -63,10 +64,12 @@ input {
   background:#00A79D;
   color: white;
   display: block;
+  outline-style: none;
   width: 50vh;
   transition: background 1s;
   padding: 2px;
   margin: 10px;
+  margin-bottom: 15px;
 }
 
 .save-button:hover{
@@ -76,15 +79,37 @@ input {
 .idea-display{
   margin: auto;
   width: 100%;
+  padding-top: 15px;
 }
 
 .search-ideas {
+  outline-style: none;
   width: 50vh;
+}
+
+.card {
+  width: 50vh;
+  display: inline-block;
+  text-align: left;
+  margin: 20px;
+
+}
+
+.card h2 {
+  color: #6D6E71;
+  display: inline;
+  line-height: 
+
+
 }
 
 .svg {
   width: 3%;
   transition: background 1s;
+}
+
+.svg-delete {
+  
 }
 
 .delete:hover {
