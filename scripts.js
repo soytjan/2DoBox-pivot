@@ -55,6 +55,7 @@ function clearInputs() {
 };
 
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
+
 $('.idea-display').on('click', '.delete', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
