@@ -15,9 +15,9 @@ function Idea(title, body, id) {
 
 Idea.prototype.showQuality = function() {
   console.log("Hi, I'm a method added on with prototype");
-
 }
 
+//PUSH CARDS TO LOCAL STORAGE
 function storeCard() {
   var uniqueId = Date.now();
   var ideaCard = new Idea($ideaTitle.val(),$ideaBody.val(), uniqueId)
@@ -25,6 +25,7 @@ function storeCard() {
   localStorage.setItem(uniqueId, stringifiedCard);
 }
 
+//CREATE CARD FROM STORAGE
 function showStorage () {
   var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
@@ -37,6 +38,7 @@ function showStorage () {
     console.log(ideaArray)    
 }
 
+//SHOWS STORAGE ON LOAD
 function showOnLoad() {
   var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
@@ -48,10 +50,6 @@ function showOnLoad() {
   }
 }
 
-Idea.prototype.showCard = function() {
-  console.log("Hi, I'm a method added on with prototype");
-}
-
 //SAVE USER INPUT TO OBJECT
 $saveButton.on('click', function(e) {
   e.preventDefault();
@@ -60,7 +58,8 @@ $saveButton.on('click', function(e) {
   clearInputs();
   // ideaCard.showQuality();
 })
-  
+
+//UMM... CLEARS INPUTS
 function clearInputs() {
   $ideaTitle.val('');
   $ideaBody.val('');
@@ -68,6 +67,7 @@ function clearInputs() {
 
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
 
+//LISTENER TO DELETE CARDS
 $('.idea-display').on('click', '.delete', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
@@ -76,48 +76,57 @@ $('.idea-display').on('click', '.delete', function() {
 });
 
 //HOLY FUCK THIS MAY BE THE UGLIEST CODE IVE EVER WRITTEN BUT IT GOD DAMN WORKS FOR NOW
+//UPVOTE CHANGE QUALITY
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  console.log(parsedIdea.quality);
-    
-    parsedIdea.quality++
+  //PUSH UPDATED QUALITY TO LOCAL STORAGE
+  function store() {
     var stringifiedIdea = JSON.stringify(parsedIdea)
     localStorage.setItem(parentDiv, stringifiedIdea)
-
-    if (parsedIdea.quality > 3) {
-      console.log("hi");
-      parsedIdea.quality = 3;
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
-      return;
-    } 
-      else if (parsedIdea.quality ===2) {
-        $('.'+parentDiv+'').text("Quality: Good");
-        var stringifiedIdea = JSON.stringify(parsedIdea)
-        localStorage.setItem(parentDiv, stringifiedIdea)
-    } else if (parsedIdea.quality === 3){
-        $('.'+parentDiv+'').text("Quality: Genius");
-        var stringifiedIdea = JSON.stringify(parsedIdea)
-        localStorage.setItem(parentDiv, stringifiedIdea)
-    } 
+  }  
+  parsedIdea.quality++;
+  store();
+  //MAKES ANY VOTE OVER 3 REMAIN 3 THEN RETURNS
+  if (parsedIdea.quality > 3) {
+    parsedIdea.quality = 3;
+    store();
+    return;
+  } //UPVOTES TO GOOD
+  else if (parsedIdea.quality === 2) {
+    $('.'+parentDiv+'').text("Quality: Good");
+    store()
+  } //UPVOTES TO GENIUS
+  else if (parsedIdea.quality === 3){
+    $('.'+parentDiv+'').text("Quality: Genius");
+    store()
+  } 
 });
-
-
 
 $('.idea-display').on('click', '.downvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  console.log(parsedIdea)
-  if (parsedIdea.quality <= 1) {
-    return;
-  } 
-  else {
-    parsedIdea.quality--
+  function store() {
     var stringifiedIdea = JSON.stringify(parsedIdea)
     localStorage.setItem(parentDiv, stringifiedIdea)
-  }
+  } 
+  parsedIdea.quality--;
+  store();
 
+  if (parsedIdea.quality <= 1) {
+    parsedIdea.quality = 1;
+    $('.'+parentDiv+'').text("Quality: Swill");
+    store();
+    return;
+  }   
+  else if (parsedIdea.quality === 2) {
+    $('.'+parentDiv+'').text("Quality: Good");
+    store()
+  } //UPVOTES TO GENIUS
+  else if (parsedIdea.quality === 3){
+    $('.'+parentDiv+'').text("Quality: Genius");
+    store()
+  } 
 });
