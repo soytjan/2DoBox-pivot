@@ -4,6 +4,8 @@ showOnLoad();
 var $ideaTitle = $('.idea-title');
 var $ideaBody = $('.idea-body');
 var $saveButton = $('.save-button');
+$('.idea-title').keyup(enableButton);
+$('.idea-body').keyup(enableButton);
 
 //IDEA CONSTRUCTOR, NEED TO FIGURE OUT HOW TO PUSH THIS TO LOCAL STORAGE
 function Idea(title, body, id) {
@@ -66,7 +68,7 @@ $saveButton.on('click', function(e) {
   storeCard();
   showStorage();
   clearInputs();
-  // ideaCard.showQuality();
+  disableButton();
 })
 
 //UMM... CLEARS INPUTS
@@ -75,6 +77,20 @@ function clearInputs() {
   $ideaBody.val('');
 };
 
+function enableButton() {
+  if ($('.idea-title').val() === "" || $('.idea-body').val() === "") {
+    $('.save-button').attr('disabled', true);
+  }
+
+  else {
+    $('.save-button').removeAttr('disabled', false);
+    console.log ('hey i work');
+  }
+
+}
+function disableButton() {
+ $('.save-button').attr('disabled', true);
+}
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
 
 //LISTENER TO DELETE CARDS
