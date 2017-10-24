@@ -19,9 +19,10 @@ Idea.prototype.showQuality = function() {
 }
 
 function storeCard() {
-  var ideaCard = new Idea($ideaTitle.val(),$ideaBody.val(), Date.now())
+  var uniqueId = Date.now();
+  var ideaCard = new Idea($ideaTitle.val(),$ideaBody.val(), uniqueId)
   var stringifiedCard = JSON.stringify(ideaCard);
-  localStorage.setItem(Date.now(), stringifiedCard);
+  localStorage.setItem(uniqueId, stringifiedCard);
 }
 
 function showStorage () {
@@ -30,7 +31,7 @@ function showStorage () {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality">Swill</span> </p></div>'   
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'   
   }
   $('.idea-display').append(card);
     console.log(ideaArray)    
@@ -42,7 +43,7 @@ function showOnLoad() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><p>Quality: <span id="quality">Swill</span> </p></div>'   
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'   
     $('.idea-display').append(card);
   }
 }
@@ -76,14 +77,51 @@ $('.idea-display').on('click', '.delete', function() {
 
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div');
-  console.log(this);
+  parentDiv = parentDiv.id;
+  console.log(parentDiv)
+  $('.'+parentDiv+'').text("hi");
+  console.log($(this))
+});
+
+// $('.idea-display').on('click', '.upvote', function() {
+//   var parentDiv = this.closest('div');
+//   parentDiv = parentDiv.id;
+//   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+//   console.log(parsedIdea.quality);
+//   if (parsedIdea.quality >= 3) {
+//     return;
+//   } else if (parsedIdea.quality === 1) {
+//     console.log($('img').find('span'))
+//     this.closest('#quality').text("Swill");
+//   } else if (parsedIdea.quality === 2) {
+//     this.closest('#quality').text("good");
+//   } else if (parsedIdea.quality === 3) {
+//     this.closest('#quality').text("great")
+//   } else {
+//     parsedIdea.quality++
+//     var stringifiedIdea = JSON.stringify(parsedIdea)
+//     localStorage.setItem(parentDiv, stringifiedIdea)
+//   } 
+// });
+
+function upQuality() {
+
+
+}
+
+
+$('.idea-display').on('click', '.downvote', function() {
+  var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  console.log(parsedIdea.quality)
-  parsedIdea.quality++
-  console.log(parsedIdea.quality)
-  var stringifiedIdea = JSON.stringify(parsedIdea)
-  console.log(stringifiedIdea)
-  localStorage.setItem(parentDiv, stringifiedIdea)
-  // this.closest('div').remove();
+  console.log(parsedIdea)
+  if (parsedIdea.quality <= 1) {
+    return;
+  } 
+  else {
+    parsedIdea.quality--
+    var stringifiedIdea = JSON.stringify(parsedIdea)
+    localStorage.setItem(parentDiv, stringifiedIdea)
+  }
+
 });
