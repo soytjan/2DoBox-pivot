@@ -38,7 +38,7 @@ function showStorage () {
 }
 
 function showOnLoad() {
-    var ideaArray = [];
+  var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
@@ -75,39 +75,35 @@ $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
 });
 
+//HOLY FUCK THIS MAY BE THE UGLIEST CODE IVE EVER WRITTEN BUT IT GOD DAMN WORKS FOR NOW
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
-  console.log(parentDiv)
-  $('.'+parentDiv+'').text("hi");
-  console.log($(this))
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  console.log(parsedIdea.quality);
+    
+    parsedIdea.quality++
+    var stringifiedIdea = JSON.stringify(parsedIdea)
+    localStorage.setItem(parentDiv, stringifiedIdea)
+
+    if (parsedIdea.quality > 3) {
+      console.log("hi");
+      parsedIdea.quality = 3;
+      var stringifiedIdea = JSON.stringify(parsedIdea)
+      localStorage.setItem(parentDiv, stringifiedIdea)
+      return;
+    } 
+      else if (parsedIdea.quality ===2) {
+        $('.'+parentDiv+'').text("Quality: Good");
+        var stringifiedIdea = JSON.stringify(parsedIdea)
+        localStorage.setItem(parentDiv, stringifiedIdea)
+    } else if (parsedIdea.quality === 3){
+        $('.'+parentDiv+'').text("Quality: Genius");
+        var stringifiedIdea = JSON.stringify(parsedIdea)
+        localStorage.setItem(parentDiv, stringifiedIdea)
+    } 
 });
 
-// $('.idea-display').on('click', '.upvote', function() {
-//   var parentDiv = this.closest('div');
-//   parentDiv = parentDiv.id;
-//   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-//   console.log(parsedIdea.quality);
-//   if (parsedIdea.quality >= 3) {
-//     return;
-//   } else if (parsedIdea.quality === 1) {
-//     console.log($('img').find('span'))
-//     this.closest('#quality').text("Swill");
-//   } else if (parsedIdea.quality === 2) {
-//     this.closest('#quality').text("good");
-//   } else if (parsedIdea.quality === 3) {
-//     this.closest('#quality').text("great")
-//   } else {
-//     parsedIdea.quality++
-//     var stringifiedIdea = JSON.stringify(parsedIdea)
-//     localStorage.setItem(parentDiv, stringifiedIdea)
-//   } 
-// });
-
-function upQuality() {
-
-
-}
 
 
 $('.idea-display').on('click', '.downvote', function() {
