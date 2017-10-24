@@ -1,5 +1,5 @@
 $(document).ready(function() { 
-  showOnLoad();
+showOnLoad();
 
 var $ideaTitle = $('.idea-title');
 var $ideaBody = $('.idea-body');
@@ -45,7 +45,17 @@ function showOnLoad() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'   
+    console.log(ideaArray[i].quality)
+    if (ideaArray[i].quality === 1) {
+      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'  
+    }
+    else if (ideaArray[i].quality === 2) {
+      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Good</span></div>'
+    } 
+    else if (ideaArray[i].quality === 3) {
+      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Genius</span></div>'
+    }
+
     $('.idea-display').append(card);
   }
 }
@@ -74,6 +84,8 @@ $('.idea-display').on('click', '.delete', function() {
   localStorage.removeItem(parentDiv);
   this.closest('div').remove();
 });
+
+
 
 //HOLY FUCK THIS MAY BE THE UGLIEST CODE IVE EVER WRITTEN BUT IT GOD DAMN WORKS FOR NOW
 //UPVOTE CHANGE QUALITY
@@ -114,7 +126,6 @@ $('.idea-display').on('click', '.downvote', function() {
   } 
   parsedIdea.quality--;
   store();
-
   if (parsedIdea.quality <= 1) {
     parsedIdea.quality = 1;
     $('.'+parentDiv+'').text("Quality: Swill");
