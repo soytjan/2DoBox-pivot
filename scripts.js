@@ -34,7 +34,7 @@ function showStorage () {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'   
+    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'   
   }
   $('.idea-display').append(card);
     console.log(ideaArray)    
@@ -49,13 +49,13 @@ function showOnLoad() {
     ideaArray.push(parsed)
     console.log(ideaArray[i].quality)
     if (ideaArray[i].quality === 1) {
-      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'  
+      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'  
     }
     else if (ideaArray[i].quality === 2) {
-      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Good</span></div>'
+      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Good</span></div>'
     } 
     else if (ideaArray[i].quality === 3) {
-      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2>'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p>'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Genius</span></div>'
+      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Genius</span></div>'
     }
 
     $('.idea-display').append(card);
