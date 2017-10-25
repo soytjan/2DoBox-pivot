@@ -46,6 +46,28 @@ function showStorage () {
   $('.idea-display').append(card);
 }
 
+function prependCard(idea) {
+  console.log(idea);
+  var qualityWord = '';
+  if (idea.quality == 1) {
+    qualityWord = 'Quality: Swill'
+  } else if (idea.quality == 2) {
+    qualityWord = 'Quality: Plausible'
+  } else if (idea.quality == 3) {
+    qualityWord = 'Quality: Genius'
+  }
+
+ var card = `<div id=${idea.id} class="card">
+                <h2 contenteditable="true">${idea.title}</h2>
+                <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
+                <p contenteditable="true">${idea.body}</p>
+                <img class="svg upvote" src="images/upvote.svg" alt="up vote">
+                <img class="svg downvote" src="images/downvote.svg" alt="down vote">
+                <span id="quality" class=${idea.id}>${qualityWord}</span>
+              </div>`
+  return card;
+}
+
 //SHOWS STORAGE ON LOAD
 function showOnLoad() {
   var ideaArray = [];
@@ -53,37 +75,8 @@ function showOnLoad() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    if (ideaArray[i].quality === 1) {
-      var card = `<div id=${ideaArray[i].id} class="card">
-                    <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                    <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
-                    <p contenteditable="true">${ideaArray[i].body}</p>
-                    <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                    <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                    <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
-                  </div>`
-    }
-    else if (ideaArray[i].quality === 2) {
-      var card = `<div id=${ideaArray[i].id} class="card">
-                    <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                    <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
-                    <p contenteditable="true">${ideaArray[i].body}</p>
-                    <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                    <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                    <span id="quality" class=${ideaArray[i].id}>Quality: Good</span>
-                  </div>`
-    } 
-    else if (ideaArray[i].quality === 3) {
-      var card = `<div id=${ideaArray[i].id} class="card">
-                    <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                    <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
-                    <p contenteditable="true">${ideaArray[i].body}</p>
-                    <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                    <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                    <span id="quality" class=${ideaArray[i].id}>Quality: Genius</span>
-                  </div>`
-    }
-    $('.idea-display').append(card);
+    prependCard(ideaArray[i]);
+    $('.idea-display').append(prependCard(ideaArray[i]));
   }
 }
 
