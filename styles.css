@@ -45,7 +45,7 @@ input {
 }
 
 .idea-title {
-  width: 50vh;
+  width: 85vh;
   display: block;
   outline-style: none;
   padding: 2px;
@@ -55,7 +55,7 @@ input {
 .idea-body {
   display: block;
   outline-style: none;
-  width: 50vh;
+  width: 85vh;
   padding: 2px;
   margin: 10px;
 }
@@ -65,7 +65,7 @@ input {
   color: white;
   display: block;
   outline-style: none;
-  width: 50vh;
+  width: 85vh;
   transition: background 1s;
   padding: 2px;
   margin: 10px;
@@ -81,50 +81,65 @@ input {
 }
 
 .idea-display{
-  margin: auto;
   width: 100%;
-  padding-top: 15px;
+  /*padding-top: 15px;*/
 }
 
 .search-ideas {
   outline-style: none;
-  width: 50vh;
+  margin: 15px 0px;
+  width: 85vh;
 }
 
 .card {
-  width: 50vh;
-  display: inline-block;
-  text-align: left;
-  margin: 20px;
-
-}
+  width: 85vh;
+  border: 1px solid black;
+  margin: auto; 
+  }
 
 .card h2 {
   color: #6D6E71;
-  display: inline;
-  line-height: 
+  font-family: Open-Sans;
+  margin-left: 25px;
+  
+}
 
+.svg.delete {
+    left: 235px;
+ }
 
+.card p {
+  color:#939598;
+  margin-left: 25px;
+  text-align: left;
 }
 
 .svg {
   width: 3%;
   transition: background 1s;
+  }
+
+.svg.upvote {
+  right: 170px;
 }
 
-.svg-delete {
-  
+.svg.downvote{
+  right: 160px;
 }
 
-.delete:hover {
+.svg.delete:hover {
   fill: red;
-
 }
 
-.upvote:hover {
+.svg.upvote:hover {
   fill: green;
 }
 
-.downvote:hover {
+.svg.downvote:hover {
   fill: yellow;
+}
+
+#quality {
+  color:#6D6E71;
+   
 }
