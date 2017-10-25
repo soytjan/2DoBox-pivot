@@ -34,10 +34,9 @@ function showStorage () {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'   
+    var card = `<div id=${ideaArray[i].id} class="card"><h2 contenteditable="true">${ideaArray[i].title}</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">${ideaArray[i].body}</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class=${ideaArray[i].id}>Quality: Swill</span></div>`   
   }
   $('.idea-display').append(card);
-    console.log(ideaArray)    
 }
 
 //SHOWS STORAGE ON LOAD
@@ -47,15 +46,14 @@ function showOnLoad() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    console.log(ideaArray[i].quality)
     if (ideaArray[i].quality === 1) {
-      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Swill</span></div>'  
+      var card = `<div id=${ideaArray[i].id} class="card"><h2 contenteditable="true">${ideaArray[i].title}</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">${ideaArray[i].body}</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class=${ideaArray[i].id}>Quality: Swill</span></div>`
     }
     else if (ideaArray[i].quality === 2) {
-      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Good</span></div>'
+      var card = `<div id=${ideaArray[i].id} class="card"><h2 contenteditable="true">${ideaArray[i].title}</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">${ideaArray[i].body}</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class=${ideaArray[i].id}>Quality: Good</span></div>`
     } 
     else if (ideaArray[i].quality === 3) {
-      var card = '<div id="'+ideaArray[i].id+'" class="card"><h2 contenteditable="true">'+ideaArray[i].title+'</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">'+ideaArray[i].body+'</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class="'+ideaArray[i].id+'">Quality: Genius</span></div>'
+      var card = `<div id=${ideaArray[i].id} class="card"><h2 contenteditable="true">${ideaArray[i].title}</h2><img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea"><p contenteditable="true">${ideaArray[i].body}</p><img class="svg upvote" src="images/upvote.svg" alt="up vote"><img class="svg downvote" src="images/downvote.svg" alt="down vote"><span class=${ideaArray[i].id}>Quality: Genius</span></div>`
     }
 
     $('.idea-display').append(card);
@@ -81,16 +79,16 @@ function enableButton() {
   if ($('.idea-title').val() === "" || $('.idea-body').val() === "") {
     $('.save-button').attr('disabled', true);
   }
-
   else {
     $('.save-button').removeAttr('disabled', false);
     console.log ('hey i work');
   }
-
 }
+
 function disableButton() {
  $('.save-button').attr('disabled', true);
 }
+
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
 
 //LISTENER TO DELETE CARDS
@@ -100,8 +98,6 @@ $('.idea-display').on('click', '.delete', function() {
   localStorage.removeItem(parentDiv);
   this.closest('div').remove();
 });
-
-
 
 //HOLY FUCK THIS MAY BE THE UGLIEST CODE IVE EVER WRITTEN BUT IT GOD DAMN WORKS FOR NOW
 //UPVOTE CHANGE QUALITY
@@ -157,3 +153,36 @@ $('.idea-display').on('click', '.downvote', function() {
     store()
   } 
 });
+
+//CHANGE THE TITLE AND SAVE TO LOCAL STORAGE
+$('.idea-display').on('click', 'h2', function() {
+  $(this).on('keypress', function(e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+    var parentDiv = this.closest('div');
+    parentDiv = parentDiv.id;
+    var newTitle = this.innerHTML;
+    var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+    parsedIdea.title = newTitle;
+    var stringifiedIdea = JSON.stringify(parsedIdea)
+    localStorage.setItem(parentDiv, stringifiedIdea)
+    }
+  })
+})
+
+//CHANGE THE BODY AND SAVE TO LOCAL STORAGE
+$('.idea-display').on('click', 'p', function() {
+  $(this).on('keypress', function(e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+    var parentDiv = this.closest('div');
+    parentDiv = parentDiv.id;
+    var newBody = this.innerHTML;
+    var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+    parsedIdea.body = newBody;
+    var stringifiedIdea = JSON.stringify(parsedIdea)
+    localStorage.setItem(parentDiv, stringifiedIdea)
+    }
+  })
+})
+
