@@ -40,7 +40,7 @@ function showStorage () {
                   <p contenteditable="true">${ideaArray[i].body}</p>
                   <img class="svg upvote" src="images/upvote.svg" alt="up vote">
                   <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                  <span class=${ideaArray[i].id}>Quality: Swill</span>
+                  <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
                 </div>`   
   }
   $('.idea-display').append(card);
@@ -60,7 +60,7 @@ function showOnLoad() {
                     <p contenteditable="true">${ideaArray[i].body}</p>
                     <img class="svg upvote" src="images/upvote.svg" alt="up vote">
                     <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                    <span class=${ideaArray[i].id}>Quality: Swill</span>
+                    <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
                   </div>`
     }
     else if (ideaArray[i].quality === 2) {
@@ -70,7 +70,7 @@ function showOnLoad() {
                     <p contenteditable="true">${ideaArray[i].body}</p>
                     <img class="svg upvote" src="images/upvote.svg" alt="up vote">
                     <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                    <span class=${ideaArray[i].id}>Quality: Good</span>
+                    <span id="quality" class=${ideaArray[i].id}>Quality: Good</span>
                   </div>`
     } 
     else if (ideaArray[i].quality === 3) {
@@ -80,7 +80,7 @@ function showOnLoad() {
                     <p contenteditable="true">${ideaArray[i].body}</p>
                     <img class="svg upvote" src="images/upvote.svg" alt="up vote">
                     <img class="svg downvote" src="images/downvote.svg" alt="down vote">
-                    <span class=${ideaArray[i].id}>Quality: Genius</span>
+                    <span id="quality" class=${ideaArray[i].id}>Quality: Genius</span>
                   </div>`
     }
     $('.idea-display').append(card);

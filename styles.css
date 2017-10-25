@@ -8,14 +8,12 @@ font-size: 20px;
 /*user input section*/
 .user-input {
   background: #E5F3F2;
-  height: ;
   width: 100%;
   margin: auto;
-  padding-top: 4vh;
+  padding-top: 20px;
 }
 
 header {
-  height: 50vh;
   min-height: 25px;
 }
 
@@ -23,7 +21,8 @@ h1 {
   color: #6D6E71;
   font-size: 2em;
   font-family: Roboto Slab;
-  margin-bottom: 4vh;
+  padding-top: 0px;
+  padding-bottom: 10px;
 }
 
 .idea {
@@ -46,15 +45,17 @@ input {
 }
 
 .idea-title {
-  width: 50vh;
+  width: 85vh;
   display: block;
+  outline-style: none;
   padding: 2px;
   margin: 10px;
 }
 
 .idea-body {
   display: block;
-  width: 50vh;
+  outline-style: none;
+  width: 85vh;
   padding: 2px;
   margin: 10px;
 }
@@ -63,10 +64,12 @@ input {
   background:#00A79D;
   color: white;
   display: block;
-  width: 50vh;
+  outline-style: none;
+  width: 85vh;
   transition: background 1s;
   padding: 2px;
   margin: 10px;
+  margin-bottom: 15px;
 }
 
 .save-button:disabled {
@@ -78,28 +81,71 @@ input {
 }
 
 .idea-display{
-  margin: auto;
   width: 100%;
+  /*padding-top: 15px;*/
 }
 
 .search-ideas {
-  width: 50vh;
+  outline-style: none;
+  margin: 15px 0px;
+  width: 85vh;
+}
+
+/*container-card*/
+.card {
+  width: 85vh;
+  border-bottom: 1px solid #D1D3D4;
+  margin: 0vh auto 5vh auto;
+  text-align: left;
+  padding-bottom: 5vh; 
+  }
+
+/*children inside of card*/
+.card h2 {
+  color: #6D6E71;
+  font-family: Open-Sans;
+  font-size: .8em;
+  display: inline;
+}
+
+.svg.delete {
+   float: right;
+ }
+
+.card p {
+  color:#939598;
+  font-size: .7em;
+  margin: 10px 0px 15px 0px;
 }
 
 .svg {
-  width: 3%;
   transition: background 1s;
+  width: 4.5vh;
+  vertical-align: middle;
+  }
+
+.svg.upvote {
+  margin-right: 3vh;  
 }
 
-.delete:hover {
+.svg.downvote{
+  margin-right: 3vh;
+}
+
+.svg.delete:hover {
   fill: red;
-
 }
 
-.upvote:hover {
+.svg.upvote:hover {
   fill: green;
 }
 
-.downvote:hover {
+.svg.downvote:hover {
   fill: yellow;
+}
+
+#quality {
+  color:#6D6E71;
+  font-size: 0.6em;
+   
 }
