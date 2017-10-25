@@ -72,6 +72,10 @@ input {
   margin-bottom: 15px;
 }
 
+.save-button:disabled {
+  opacity: 0.5;
+}
+
 .save-button:hover{
   background:#045E55;
 }
