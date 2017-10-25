@@ -94,10 +94,10 @@ input {
 /*container-card*/
 .card {
   width: 85vh;
-  border: 1px solid black;
-  margin: auto;
+  border-bottom: 1px solid #D1D3D4;
+  margin: 0vh auto 5vh auto;
   text-align: left;
-  padding-bottom: 5vh;
+  padding-bottom: 5vh; 
   }
 
 /*children inside of card*/
@@ -121,6 +121,7 @@ input {
 .svg {
   transition: background 1s;
   width: 4.5vh;
+  vertical-align: middle;
   }
 
 .svg.upvote {
@@ -145,5 +146,6 @@ input {
 
 #quality {
   color:#6D6E71;
+  font-size: 0.6em;
    
 }
