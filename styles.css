@@ -91,40 +91,44 @@ input {
   width: 85vh;
 }
 
+/*container-card*/
 .card {
   width: 85vh;
   border: 1px solid black;
-  margin: auto; 
+  margin: auto;
+  text-align: left;
+  padding-bottom: 5vh;
   }
 
+/*children inside of card*/
 .card h2 {
   color: #6D6E71;
   font-family: Open-Sans;
-  margin-left: 25px;
-  
+  font-size: .8em;
+  display: inline;
 }
 
 .svg.delete {
-    left: 235px;
+   float: right;
  }
 
 .card p {
   color:#939598;
-  margin-left: 25px;
-  text-align: left;
+  font-size: .7em;
+  margin: 10px 0px 15px 0px;
 }
 
 .svg {
-  width: 3%;
   transition: background 1s;
+  width: 4.5vh;
   }
 
 .svg.upvote {
-  right: 170px;
+  margin-right: 3vh;  
 }
 
 .svg.downvote{
-  right: 160px;
+  margin-right: 3vh;
 }
 
 .svg.delete:hover {
