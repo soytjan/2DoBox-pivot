@@ -184,14 +184,19 @@ $('.idea-display').on('click', '.downvote', function() {
 $('.idea-display').on('click', 'h2', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
-    if (key === 13) {
-    var parentDiv = this.closest('div');
-    parentDiv = parentDiv.id;
-    var newTitle = this.innerHTML;
-    var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-    parsedIdea.title = newTitle;
-    var stringifiedIdea = JSON.stringify(parsedIdea)
-    localStorage.setItem(parentDiv, stringifiedIdea)
+        var key = e.which || e.keyCode;
+    if (key === 13 && e.shiftKey) {
+      console.log("enter and shift pressed")
+    }
+    else if (key === 13) {
+      e.preventDefault();
+      var parentDiv = this.closest('div');
+      parentDiv = parentDiv.id;
+      var newTitle = this.innerHTML;
+      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+      parsedIdea.title = newTitle;
+      var stringifiedIdea = JSON.stringify(parsedIdea)
+      localStorage.setItem(parentDiv, stringifiedIdea)
     }
   })
 })
@@ -200,14 +205,18 @@ $('.idea-display').on('click', 'h2', function() {
 $('.idea-display').on('click', 'p', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
-    if (key === 13) {
-    var parentDiv = this.closest('div');
-    parentDiv = parentDiv.id;
-    var newBody = this.innerHTML;
-    var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-    parsedIdea.body = newBody;
-    var stringifiedIdea = JSON.stringify(parsedIdea)
-    localStorage.setItem(parentDiv, stringifiedIdea)
+    if (key === 13 && e.shiftKey) {
+      console.log("enter and shift pressed")
+    }
+    else if(key === 13) {
+      e.preventDefault();
+      var parentDiv = this.closest('div');
+      parentDiv = parentDiv.id;
+      var newBody = this.innerHTML;
+      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+      parsedIdea.body = newBody;
+      var stringifiedIdea = JSON.stringify(parsedIdea)
+      localStorage.setItem(parentDiv, stringifiedIdea)
     }
   })
 })
