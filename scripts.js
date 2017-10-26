@@ -36,10 +36,10 @@ function showStorage () {
     ideaArray.push(parsed)
     var card = `<div id=${ideaArray[i].id} class="card">
                   <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                  <div class="svg delete" title="delete-button" alt="delete idea"></div>
+                  <span class="svg delete" title="delete-button" alt="delete idea"></span>
                   <p contenteditable="true">${ideaArray[i].body}</p>
-                  <div class="svg upvote" alt="up vote"></div>
-                  <div class="svg downvote" alt="down vote"></div>
+                  <span class="svg upvote" alt="up vote"></span>
+                  <span class="svg downvote" alt="down vote"></span>
                   <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
                 </div>`   
   }
@@ -56,30 +56,30 @@ function showOnLoad() {
     if (ideaArray[i].quality === 1) {
       var card = `<div id=${ideaArray[i].id} class="card">
                     <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                    <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
+                    <span class="svg delete" title="delete-button" alt="delete idea"></span>
                     <p contenteditable="true">${ideaArray[i].body}</p>
-                    <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                    <img class="svg downvote" src="images/downvote.svg" alt="down vote">
+                    <span class="svg upvote" alt="up vote"></span>
+                    <span class="svg downvote" alt="down vote"></span>
                     <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
                   </div>`
     }
     else if (ideaArray[i].quality === 2) {
       var card = `<div id=${ideaArray[i].id} class="card">
                     <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                    <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
+                    <span class="svg delete"  title="delete-button" alt="delete idea"></span>
                     <p contenteditable="true">${ideaArray[i].body}</p>
-                    <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                    <img class="svg downvote" src="images/downvote.svg" alt="down vote">
+                    <span class="svg upvote"  alt="up vote"></span>
+                    <span class="svg downvote" alt="down vote"></span>
                     <span id="quality" class=${ideaArray[i].id}>Quality: Good</span>
                   </div>`
     } 
     else if (ideaArray[i].quality === 3) {
       var card = `<div id=${ideaArray[i].id} class="card">
                     <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                    <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
+                    <span> class="svg delete" title="delete-button" alt="delete idea"></span>
                     <p contenteditable="true">${ideaArray[i].body}</p>
-                    <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                    <img class="svg downvote" src="images/downvote.svg" alt="down vote">
+                    <span> class="svg upvote" alt="up vote"></span>
+                    <span> class="svg downvote" alt="down vote"></span>
                     <span id="quality" class=${ideaArray[i].id}>Quality: Genius</span>
                   </div>`
     }
