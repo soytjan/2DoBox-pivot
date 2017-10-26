@@ -4,6 +4,7 @@ showOnLoad();
 var $ideaTitle = $('.idea-title');
 var $ideaBody = $('.idea-body');
 var $saveButton = $('.save-button');
+var $searchIdeas = $('.search-ideas');
 $('.idea-title').keyup(enableButton);
 $('.idea-body').keyup(enableButton);
 
@@ -108,6 +109,24 @@ function enableButton() {
 function disableButton() {
  $('.save-button').attr('disabled', true);
 }
+
+function searchIdeas(){
+  var cardsOnDom = Array.from($('.card'));
+  console.log(cardsOnDom);
+  $('.search-ideas').on('change keyup', function(event) {
+    $searchIdeas.val();
+    cardsOnDom.forEach(function(card) {
+      $("h2").css("background-color", "");
+      $("h2:contains("+$searchIdeas.val()+")").css("background-color", "pink");
+
+    if ($searchIdeas.val() === '') {
+        $("h2").css("background-color", "");
+    }  
+  })
+})
+};
+
+searchIdeas();
 
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
 
