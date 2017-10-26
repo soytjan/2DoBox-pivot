@@ -36,10 +36,10 @@ function showStorage () {
     ideaArray.push(parsed)
     var card = `<div id=${ideaArray[i].id} class="card">
                   <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                  <img class="svg delete" src="images/delete.svg" title="delete-button" alt="delete idea">
+                  <div class="svg delete" title="delete-button" alt="delete idea"></div>
                   <p contenteditable="true">${ideaArray[i].body}</p>
-                  <img class="svg upvote" src="images/upvote.svg" alt="up vote">
-                  <img class="svg downvote" src="images/downvote.svg" alt="down vote">
+                  <div class="svg upvote" alt="up vote"></div>
+                  <div class="svg downvote" alt="down vote"></div>
                   <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
                 </div>`   
   }
