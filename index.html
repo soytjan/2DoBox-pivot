@@ -8,25 +8,21 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-<body>
-
-<header class="user-input">
-  <h1><span class="idea">idea</span>Box</h1>
-  <div class="form-wrapper">
-    <form>
-      <input class="idea-title" type="text" name="title" placeholder="Title">
-      <input class="idea-body" type="text" name="body" placeholder="Body"> 
-      <button class="save-button" disabled>save</button>
-    </form>
-</div>
-</header>
-
-<section class="idea-display">
-  <input class="search-ideas" type="text" name="searchIdeas" placeholder="Search">
-</section>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="scripts.js"></script>
-
-</body>
+  <body>
+    <header class="user-input">
+      <h1><span class="idea">idea</span>Box</h1>
+      <div class="form-wrapper">
+        <form>
+          <input aria-label="idea title input" class="idea-title" type="text" name="title" placeholder="Title">
+          <input aria-label="idea body input" class="idea-body" type="text" name="body" placeholder="Body">
+          <button class="save-button" disabled>save</button>
+        </form>
+      </div>
+    </header>
+    <section class="idea-display">
+      <input aria-label="search ideas input" class="search-ideas" type="text" name="searchIdeas" placeholder="Search">
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts.js"></script>
+  </body>
 </html>
