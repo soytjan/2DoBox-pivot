@@ -174,7 +174,7 @@ $('.idea-display').on('click', '.downvote', function() {
     return;
   }   
   else if (parsedIdea.quality === 2) {
-    $('.'+parentDiv+'').text("Quality: Good");
+    $('.'+parentDiv+'').text("Quality: Plausible");
     store()
   }
   else if (parsedIdea.quality === 3){
@@ -184,12 +184,11 @@ $('.idea-display').on('click', '.downvote', function() {
 });
 
 //CHANGE THE TITLE AND SAVE TO LOCAL STORAGE
-$('.idea-display').on('click', 'h2', function() {
+$('.idea-display').on('focus', 'h2', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
         var key = e.which || e.keyCode;
     if (key === 13 && e.shiftKey) {
-      console.log("enter and shift pressed")
     }
     else if (key === 13 || this.blur === true) {
       e.preventDefault();
@@ -214,11 +213,10 @@ $('.idea-display').on('click', 'h2', function() {
 })
 
 //CHANGE THE BODY AND SAVE TO LOCAL STORAGE
-$('.idea-display').on('click', 'p', function() {
+$('.idea-display').on('focus', 'p', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
     if (key === 13 && e.shiftKey) {
-      console.log("enter and shift pressed")
     }
     else if(key === 13) {
       e.preventDefault();
