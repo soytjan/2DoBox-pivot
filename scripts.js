@@ -1,9 +1,13 @@
 $(document).ready(function() { 
+
 showOnLoad();
+searchIdeas();
 
 var $ideaTitle = $('.idea-title');
 var $ideaBody = $('.idea-body');
 var $saveButton = $('.save-button');
+var $searchIdeas = $('.search-ideas');
+
 $('.idea-title').keyup(enableButton);
 $('.idea-body').keyup(enableButton);
 
@@ -15,8 +19,33 @@ function Idea(title, body, id) {
   this.quality = 1;
 }
 
-Idea.prototype.showQuality = function() {
-  console.log("Hi, I'm a method added on with prototype");
+//SAVE USER INPUT TO OBJECT
+$saveButton.on('click', function(e) {
+  e.preventDefault();
+  storeCard();
+  showStorage();
+  clearInputs();
+  disableButton();
+  $ideaTitle.focus();
+})
+
+//UMM... CLEARS INPUTS
+function clearInputs() {
+  $ideaTitle.val('');
+  $ideaBody.val('');
+};
+
+function enableButton() {
+  if ($('.idea-title').val() === "" || $('.idea-body').val() === "") {
+    $('.save-button').attr('disabled', true);
+  }
+  else {
+    $('.save-button').removeAttr('disabled', false);
+  }
+}
+
+function disableButton() {
+ $saveButton.attr('disabled', true);
 }
 
 //PUSH CARDS TO LOCAL STORAGE
@@ -46,8 +75,20 @@ function showStorage () {
   $('.idea-display').append(card);
 }
 
-function prependCard(idea) {
-  console.log(idea);
+//SHOWS STORAGE ON LOAD
+function showOnLoad() {
+  var ideaArray = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var retrieved = localStorage.getItem(localStorage.key(i));
+    var parsed = JSON.parse(retrieved);
+    ideaArray.push(parsed)
+    assignQuality(ideaArray[i]);
+    $('.idea-display').append(assignQuality(ideaArray[i]));
+  }
+}
+
+//ASSIGNS QUALITY BRINGS IT BACK TO ^^^ FUNCTION
+function assignQuality(idea) {
   var qualityWord = '';
   if (idea.quality == 1) {
     qualityWord = 'Quality: Swill'
@@ -56,7 +97,6 @@ function prependCard(idea) {
   } else if (idea.quality == 3) {
     qualityWord = 'Quality: Genius'
   }
-
  var card = `<div id=${idea.id} class="card">
                 <h2 contenteditable="true">${idea.title}</h2>
                 <span class="svg delete" title="delete-button" alt="delete idea"></span>
@@ -68,45 +108,23 @@ function prependCard(idea) {
   return card;
 }
 
-//SHOWS STORAGE ON LOAD
-function showOnLoad() {
-  var ideaArray = [];
-  for (var i = 0; i < localStorage.length; i++) {
-    var retrieved = localStorage.getItem(localStorage.key(i));
-    var parsed = JSON.parse(retrieved);
-    ideaArray.push(parsed)
-    prependCard(ideaArray[i]);
-    $('.idea-display').append(prependCard(ideaArray[i]));
-  }
-}
-
-//SAVE USER INPUT TO OBJECT
-$saveButton.on('click', function(e) {
-  e.preventDefault();
-  storeCard();
-  showStorage();
-  clearInputs();
-  disableButton();
-  $ideaTitle.focus();
-})
-
-//UMM... CLEARS INPUTS
-function clearInputs() {
-  $ideaTitle.val('');
-  $ideaBody.val('');
-};
-
-function enableButton() {
-  if ($('.idea-title').val() === "" || $('.idea-body').val() === "") {
-    $('.save-button').attr('disabled', true);
-  }
-  else {
-    $('.save-button').removeAttr('disabled', false);
-  }
-}
-
-function disableButton() {
- $('.save-button').attr('disabled', true);
+function searchIdeas(){
+  var cardsOnDom = Array.from($('.card'));
+  $('.search-ideas').on('change keyup', function(event) {
+     cardsOnDom.forEach(function(card) {
+      if ($searchIdeas.val() === '') {
+        $("p").closest('div').show();
+        $("h2").closest('div').show();
+      } 
+      else {
+        ($("p:contains("+$searchIdeas.val()+")") === $searchIdeas.val() || $("h2:contains("+$searchIdeas.val()+")") === $searchIdeas.val());
+        $("p").closest('div').hide();
+        $("h2").closest('div').hide();
+        $("p:contains("+$searchIdeas.val()+")").closest('div').show();
+        $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
+      }
+    })
+  })
 }
 
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
@@ -119,17 +137,15 @@ $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
 });
 
-//HOLY FUCK THIS MAY BE THE UGLIEST CODE IVE EVER WRITTEN BUT IT GOD DAMN WORKS FOR NOW
 //UPVOTE CHANGE QUALITY
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  //PUSH UPDATED QUALITY TO LOCAL STORAGE
-  function store() {
-    var stringifiedIdea = JSON.stringify(parsedIdea)
-    localStorage.setItem(parentDiv, stringifiedIdea)
-  }  
+    function store() {
+      var stringifiedIdea = JSON.stringify(parsedIdea)
+      localStorage.setItem(parentDiv, stringifiedIdea)
+    }
   parsedIdea.quality++;
   store();
   //MAKES ANY VOTE OVER 3 REMAIN 3 THEN RETURNS
@@ -139,12 +155,12 @@ $('.idea-display').on('click', '.upvote', function() {
     return;
   } //UPVOTES TO GOOD
   else if (parsedIdea.quality === 2) {
-    $('.'+parentDiv+'').text("Quality: Good");
-    store()
+    $('.'+parentDiv+'').text("Quality: Plausible");
+    store();
   } //UPVOTES TO GENIUS
   else if (parsedIdea.quality === 3){
     $('.'+parentDiv+'').text("Quality: Genius");
-    store()
+    store();
   } 
 });
 
@@ -173,7 +189,6 @@ $('.idea-display').on('click', '.downvote', function() {
     store()
   } 
 });
-
 
 //CHANGE THE TITLE AND SAVE TO LOCAL STORAGE
 $('.idea-display').on('click', 'h2', function() {
