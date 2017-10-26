@@ -1,16 +1,15 @@
 body {
 font-family: open-sans;
+font-size: 20px;
 margin: auto;
 text-align: center;
-font-size: 20px;
 }
 
-/*user input section*/
 .user-input {
   background: #E5F3F2;
-  width: 100%;
   margin: auto;
   padding-top: 20px;
+  width: 100%;
 }
 
 header {
@@ -35,9 +34,10 @@ h1 {
 }
 
 form {
-  margin: auto;
   display: inline-block;
+  margin: auto;
   text-align: left;
+  width: 100%;
 }
 
 input {
@@ -45,31 +45,50 @@ input {
 }
 
 .idea-title {
-  width: 85vh;
   display: block;
   outline-style: none;
+  border: 1px solid #CCCCCC;
   padding: 2px;
-  margin: 10px;
+  margin: 10px auto;
+  width: 85vh;
+}
+
+.idea-title:focus, .idea-body:focus, h2:focus, p:focus {
+  outline: none;
+}
+
+.idea-title::-webkit-input-placeholder {
+  color: #D1D2D4;
 }
 
 .idea-body {
+  border-color: #CCCCCC;
+  box-sizing: border-box;
   display: block;
+  height: 3.5vh;
+  min-height: 20px;
+  max-height: 20px; 
+  margin: 10px auto;
   outline-style: none;
-  width: 85vh;
   padding: 2px;
-  margin: 10px;
+  width: 85vh;
+  resize: none;
+}
+
+.idea-body::-webkit-input-placeholder {
+  color: #D1D3D4;
 }
 
 .save-button{
   background:#00A79D;
   color: white;
   display: block;
-  outline-style: none;
-  width: 85vh;
-  transition: background 1s;
-  padding: 2px;
-  margin: 10px;
+  margin: 10px auto;
   margin-bottom: 15px;
+  outline-style: none;
+  padding: 2px;
+  transition: background 1s;
+  width: 85vh;
 }
 
 .save-button:disabled {
@@ -85,26 +104,24 @@ input {
 }
 
 .search-ideas {
-  outline-style: none;
   margin: 15px 0px;
+  outline-style: none;
   width: 85vh;
 }
 
-/*container-card*/
 .card {
-  width: 85vh;
   border-bottom: 1px solid #D1D3D4;
   margin: 0vh auto 5vh auto;
+  padding-bottom: 3vh; 
   text-align: left;
-  padding-bottom: 5vh; 
+  width: 85vh;
   }
 
-/*children inside of card*/
 .card h2 {
   color: #6D6E71;
+  display: inline;
   font-family: Open-Sans;
   font-size: .8em;
-  display: inline;
 }
 
 .card p {
@@ -119,16 +136,19 @@ input {
  }
 
 .svg {
-  height: 4.5vh;
   transition: background 1s;
   vertical-align: middle;
-  width: 4.5vh;
+  height: 20px;
+  width: 20px;
+  min-height: 10px; 
+  min-width: 10px;
+  max-height: 50px;
+  max-width: 50px;
   }
 
 .svg.upvote {
   background: url("images/upvote.svg");
   display: inline-block;
-  margin-right: 3vh;  
 }
 
 .svg.downvote{
@@ -153,3 +173,69 @@ input {
   color:#6D6E71;
   font-size: 0.6em;
 }
+
+@media screen and (max-width: 800px) {
+    body {
+    margin: 0 auto;
+  }
+
+  .idea-title {
+    font-size: 20px;
+    width: 85%;
+  }
+
+  .idea-body {
+    width: 85%;
+    max-height: none;
+    min-height: 30px;
+    font-size: 20px;
+  }
+
+  .idea-display {
+    width: 100%;
+  }
+
+  .save-button {
+    width: 85%;
+  }
+  
+  .search-ideas {
+    width: 85%;
+    border: 1px solid #CCCCCC;  
+  }
+
+  .card {
+  width: 85%;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  body {
+    margin: 0 auto;
+  }
+
+  .idea-title {
+    font-size: 20px;
+  }
+
+  .idea-body {
+    max-height: none;
+    min-height: 105px;
+    height: 15vh;
+    font-size: 20px;
+  }
+
+  .idea-display {
+    width: 100%;
+  }
+  
+  .search-ideas {
+    width: 85%;
+    border: 1px solid #CCCCCC;  
+  }
+
+  .card {
+  width: 85%;
+  }
+}
+
