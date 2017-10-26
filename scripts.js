@@ -115,13 +115,23 @@ function searchIdeas(){
   console.log(cardsOnDom);
   $('.search-ideas').on('change keyup', function(event) {
     $searchIdeas.val();
+    
     cardsOnDom.forEach(function(card) {
-      $("h2").css("background-color", "");
-      $("h2:contains("+$searchIdeas.val()+")").css("background-color", "pink");
+      $("p").closest('div').hide();
+      $("p:contains("+$searchIdeas.val()+")").closest('div').show();
 
+    cardsOnDom.forEach(function(card) {
+      $("h2").closest('div').hide();
+      $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
+
+    
+    
     if ($searchIdeas.val() === '') {
-        $("h2").css("background-color", "");
-    }  
+        $("p").closest('div').show();
+        $("h2").closest('div').show();
+
+    }
+    })
   })
 })
 };
