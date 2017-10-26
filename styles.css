@@ -82,7 +82,6 @@ input {
 
 .idea-display{
   width: 100%;
-  /*padding-top: 15px;*/
 }
 
 .search-ideas {
@@ -108,44 +107,49 @@ input {
   display: inline;
 }
 
-.svg.delete {
-   float: right;
- }
-
 .card p {
   color:#939598;
   font-size: .7em;
   margin: 10px 0px 15px 0px;
 }
 
+.svg.delete {
+   background: url("images/delete.svg");
+   float: right;
+ }
+
 .svg {
+  height: 4.5vh;
   transition: background 1s;
-  width: 4.5vh;
   vertical-align: middle;
+  width: 4.5vh;
   }
 
 .svg.upvote {
+  background: url("images/upvote.svg");
+  display: inline-block;
   margin-right: 3vh;  
 }
 
 .svg.downvote{
+  background: url("images/downvote.svg");
+  display: inline-block;
   margin-right: 3vh;
 }
 
 .svg.delete:hover {
-  fill: red;
+  background: url("images/delete-hover.svg");
 }
 
 .svg.upvote:hover {
-  fill: green;
+  background: url("images/upvote-hover.svg");
 }
 
 .svg.downvote:hover {
-  fill: yellow;
+  background: url("images/downvote-hover.svg");
 }
 
 #quality {
   color:#6D6E71;
   font-size: 0.6em;
-   
 }
