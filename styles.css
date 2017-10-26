@@ -174,7 +174,41 @@ input {
   font-size: 0.6em;
 }
 
-@media screen and (max-width:620px) {
+@media screen and (max-width: 800px) {
+    body {
+    margin: 0 auto;
+  }
+
+  .idea-title {
+    font-size: 20px;
+    width: 85%;
+  }
+
+  .idea-body {
+    width: 85%;
+    max-height: none;
+    font-size: 20px;
+  }
+
+  .idea-display {
+    width: 100%;
+  }
+
+  .save-button {
+    width: 85%;
+  }
+  
+  .search-ideas {
+    width: 85%;
+    border: 1px solid #CCCCCC;  
+  }
+
+  .card {
+  width: 85%;
+  }
+}
+
+/*@media screen and (max-width:620px) {
   body {
     height: 100%;
     margin: 0 auto;
@@ -207,7 +241,7 @@ input {
   .card {
     width: 85%;
   }
-}
+}*/
 
 @media screen and (max-width: 376px) {
   body {
