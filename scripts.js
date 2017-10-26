@@ -28,6 +28,18 @@ $saveButton.on('click', function(e) {
   $ideaTitle.focus();
 })
 
+$ideaBody.on('keydown', function(e) {
+  if (e.keyCode == 13 && !e.shiftKey){
+    e.preventDefault();
+    storeCard();
+    showStorage();
+    clearInputs();
+    disableButton();
+    $ideaTitle.focus();
+  }
+});
+
+
 function clearInputs() {
   $ideaTitle.val('');
   $ideaBody.val('');
