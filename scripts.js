@@ -1,5 +1,7 @@
 $(document).ready(function() { 
 showOnLoad();
+searchIdeas();
+
 
 var $ideaTitle = $('.idea-title');
 var $ideaBody = $('.idea-body');
@@ -14,10 +16,6 @@ function Idea(title, body, id) {
   this.body = body;
   this.id = id;
   this.quality = 1;
-}
-
-Idea.prototype.showQuality = function() {
-  console.log("Hi, I'm a method added on with prototype");
 }
 
 //PUSH CARDS TO LOCAL STORAGE
@@ -112,31 +110,23 @@ function disableButton() {
 
 function searchIdeas(){
   var cardsOnDom = Array.from($('.card'));
-  console.log(cardsOnDom);
   $('.search-ideas').on('change keyup', function(event) {
-    $searchIdeas.val();
-    
-    cardsOnDom.forEach(function(card) {
-      $("p").closest('div').hide();
-      $("p:contains("+$searchIdeas.val()+")").closest('div').show();
-
-    cardsOnDom.forEach(function(card) {
-      $("h2").closest('div').hide();
-      $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
-
-    
-    
-    if ($searchIdeas.val() === '') {
+     cardsOnDom.forEach(function(card) {
+      if ($searchIdeas.val() === '') {
         $("p").closest('div').show();
         $("h2").closest('div').show();
-
-    }
+      } 
+      else {
+        ($("p:contains("+$searchIdeas.val()+")") === $searchIdeas.val() || $("h2:contains("+$searchIdeas.val()+")") === $searchIdeas.val());
+        $("p").closest('div').hide();
+        $("h2").closest('div').hide();
+        $("p:contains("+$searchIdeas.val()+")").closest('div').show();
+        $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
+      }
     })
   })
-})
-};
+}
 
-searchIdeas();
 
 }); //CLOSER OF THE DOCUMENT .READY FUNCTION
 
