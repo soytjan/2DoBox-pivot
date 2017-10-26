@@ -57,11 +57,14 @@ input {
 }
 
 .idea-body {
+  border-color: #CCCCCC;
+  box-sizing: border-box;
   display: block;
   margin: 10px auto;
   outline-style: none;
   padding: 2px;
   width: 85vh;
+  resize: none;
 }
 
 .idea-body:placeholder {
@@ -210,7 +213,6 @@ input {
   }
 
   .idea-body {
-   /* width: 85%;*/
     height: 60px;
     font-size: 20px;
   }

@@ -181,7 +181,7 @@ $('.idea-display').on('click', '.downvote', function() {
     return;
   }   
   else if (parsedIdea.quality === 2) {
-    $('.'+parentDiv+'').text("Quality: Good");
+    $('.'+parentDiv+'').text("Quality: Plausible");
     store()
   } //UPVOTES TO GENIUS
   else if (parsedIdea.quality === 3){
