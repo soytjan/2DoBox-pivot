@@ -87,6 +87,7 @@ $saveButton.on('click', function(e) {
   showStorage();
   clearInputs();
   disableButton();
+  $ideaTitle.focus();
 })
 
 //UMM... CLEARS INPUTS
