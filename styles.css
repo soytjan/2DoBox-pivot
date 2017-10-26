@@ -206,17 +206,17 @@ input {
   }
 
   .idea-title {
-    width: 85%;
+   
   }
 
   .idea-body {
-    width: 85%;
+   /* width: 85%;*/
     height: 60px;
     font-size: 20px;
   }
 
   .save-button {
-    width: 85%;
+  
   }
 
   .idea-display {
