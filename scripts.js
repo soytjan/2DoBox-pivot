@@ -19,7 +19,6 @@ function Idea(title, body, id) {
   this.quality = 1;
 }
 
-//SAVE USER INPUT TO OBJECT
 $saveButton.on('click', function(e) {
   e.preventDefault();
   storeCard();
@@ -29,7 +28,6 @@ $saveButton.on('click', function(e) {
   $ideaTitle.focus();
 })
 
-//UMM... CLEARS INPUTS
 function clearInputs() {
   $ideaTitle.val('');
   $ideaBody.val('');
@@ -48,10 +46,9 @@ function disableButton() {
  $saveButton.attr('disabled', true);
 }
 
-//PUSH CARDS TO LOCAL STORAGE
 function storeCard() {
   var uniqueId = Date.now();
-  var ideaCard = new Idea($ideaTitle.val(),$ideaBody.val(), uniqueId)
+  var ideaCard = new Idea($ideaTitle.val(), $ideaBody.val(), uniqueId)
   var stringifiedCard = JSON.stringify(ideaCard);
   localStorage.setItem(uniqueId, stringifiedCard);
 }
@@ -75,7 +72,6 @@ function showStorage () {
   $('.idea-display').append(card);
 }
 
-//SHOWS STORAGE ON LOAD
 function showOnLoad() {
   var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
@@ -127,9 +123,8 @@ function searchIdeas(){
   })
 }
 
-}); //CLOSER OF THE DOCUMENT .READY FUNCTION
+});
 
-//LISTENER TO DELETE CARDS
 $('.idea-display').on('click', '.delete', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
@@ -137,7 +132,6 @@ $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
 });
 
-//UPVOTE CHANGE QUALITY
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
@@ -148,16 +142,15 @@ $('.idea-display').on('click', '.upvote', function() {
     }
   parsedIdea.quality++;
   store();
-  //MAKES ANY VOTE OVER 3 REMAIN 3 THEN RETURNS
   if (parsedIdea.quality > 3) {
     parsedIdea.quality = 3;
     store();
     return;
-  } //UPVOTES TO GOOD
+  }
   else if (parsedIdea.quality === 2) {
     $('.'+parentDiv+'').text("Quality: Plausible");
     store();
-  } //UPVOTES TO GENIUS
+  }
   else if (parsedIdea.quality === 3){
     $('.'+parentDiv+'').text("Quality: Genius");
     store();
@@ -183,7 +176,7 @@ $('.idea-display').on('click', '.downvote', function() {
   else if (parsedIdea.quality === 2) {
     $('.'+parentDiv+'').text("Quality: Plausible");
     store()
-  } //UPVOTES TO GENIUS
+  }
   else if (parsedIdea.quality === 3){
     $('.'+parentDiv+'').text("Quality: Genius");
     store()
@@ -191,12 +184,11 @@ $('.idea-display').on('click', '.downvote', function() {
 });
 
 //CHANGE THE TITLE AND SAVE TO LOCAL STORAGE
-$('.idea-display').on('click', 'h2', function() {
+$('.idea-display').on('focus', 'h2', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
         var key = e.which || e.keyCode;
     if (key === 13 && e.shiftKey) {
-      console.log("enter and shift pressed")
     }
     else if (key === 13 || this.blur === true) {
       e.preventDefault();
@@ -221,11 +213,10 @@ $('.idea-display').on('click', 'h2', function() {
 })
 
 //CHANGE THE BODY AND SAVE TO LOCAL STORAGE
-$('.idea-display').on('click', 'p', function() {
+$('.idea-display').on('focus', 'p', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
     if (key === 13 && e.shiftKey) {
-      console.log("enter and shift pressed")
     }
     else if(key === 13) {
       e.preventDefault();
