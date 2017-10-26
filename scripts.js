@@ -11,7 +11,6 @@ var $searchIdeas = $('.search-ideas');
 $('.idea-title').keyup(enableButton);
 $('.idea-body').keyup(enableButton);
 
-//IDEA CONSTRUCTOR, NEED TO FIGURE OUT HOW TO PUSH THIS TO LOCAL STORAGE
 function Idea(title, body, id) {
   this.title = title;
   this.body = body;
@@ -39,7 +38,6 @@ $ideaBody.on('keydown', function(e) {
   }
 });
 
-
 function clearInputs() {
   $ideaTitle.val('');
   $ideaBody.val('');
@@ -65,7 +63,6 @@ function storeCard() {
   localStorage.setItem(uniqueId, stringifiedCard);
 }
 
-//CREATE CARD FROM STORAGE
 function showStorage () {
   var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
@@ -95,7 +92,6 @@ function showOnLoad() {
   }
 }
 
-//ASSIGNS QUALITY BRINGS IT BACK TO ^^^ FUNCTION
 function assignQuality(idea) {
   var qualityWord = '';
   if (idea.quality == 1) {
@@ -195,7 +191,6 @@ $('.idea-display').on('click', '.downvote', function() {
   } 
 });
 
-//CHANGE THE TITLE AND SAVE TO LOCAL STORAGE
 $('.idea-display').on('focus', 'h2', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
@@ -224,7 +219,6 @@ $('.idea-display').on('focus', 'h2', function() {
   })
 })
 
-//CHANGE THE BODY AND SAVE TO LOCAL STORAGE
 $('.idea-display').on('focus', 'p', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
