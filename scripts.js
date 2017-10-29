@@ -37,7 +37,7 @@ $saveButton.on('click', function(e) {
   $ideaTitle.focus();
 })
 
-// EVENT LISTENDER ENABLING ENTER KEY FOR SAVE BUTTON THEN STORE AND APPEND
+// EVENT LISTENER ENABLING ENTER KEY FOR SAVE BUTTON THEN STORE AND APPEND
 $ideaBody.on('keydown', function(e) {
   if (e.keyCode == 13 && !e.shiftKey){
     e.preventDefault();
@@ -56,8 +56,12 @@ function clearInputs() {
 };
 
 // IF IDEA TITLE AND BODY ARE EMPTY DISABLE ENTER BUTTON, IF NOT -> ENABLE
+// MH - declared values as variables to shorten line length.
 function enableButton() {
-  if ($('.idea-title').val() === "" || $('.idea-body').val() === "") {
+  var ideaTitleValue = $('.idea-title').val();
+  var ideaBodyValue = $('.idea-body').val();
+
+  if (ideaTitleValue === "" || ideaBodyValue === "") {
     $('.save-button').attr('disabled', true);
   }
   else {
@@ -144,19 +148,21 @@ function searchIdeas(){
   // COULD POSSIBLY JUST LISTEN FOR KEYUP
   $('.search-ideas').on('change keyup', function(event) {
      cardsOnDom.forEach(function(card) {
-      //  QUESTION: what does this do??? lol
-      if ($searchIdeas.val() === '') {
-        $("p").closest('div').show();
-        $("h2").closest('div').show();
-      }
+      //  QUESTION: what does this if statement do??? Doesn't seem like we need it at all. Search works with it commented out.  
+
+      // if ($searchIdeas.val() === '') {
+      //   $("p").closest('div').show();
+      //   $("h2").closest('div').show();
+      // }
       // MAYBE WE SHOULD MAKE P:CONTAINS(...) AND H2:CONTAINS(...) BOTH VARIABLES??
-       else {
+       // else {
+        console.log($("h2:contains("+$searchIdeas.val()+")"));
         ($("p:contains("+$searchIdeas.val()+")") === $searchIdeas.val() || $("h2:contains("+$searchIdeas.val()+")") === $searchIdeas.val());
         $("p").closest('div').hide();
         $("h2").closest('div').hide();
         $("p:contains("+$searchIdeas.val()+")").closest('div').show();
         $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
-      }
+      // }
     })
   })
 }
