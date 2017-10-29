@@ -56,16 +56,15 @@ function clearInputs() {
 };
 
 // IF IDEA TITLE AND BODY ARE EMPTY DISABLE ENTER BUTTON, IF NOT -> ENABLE
-// MH - declared values as variables to shorten line length.
+// MH - cleaned up if/else to check first for populated fields, then disable.
 function enableButton() {
   var ideaTitleValue = $('.idea-title').val();
   var ideaBodyValue = $('.idea-body').val();
 
-  if (ideaTitleValue === "" || ideaBodyValue === "") {
-    $('.save-button').attr('disabled', true);
-  }
-  else {
-    $('.save-button').removeAttr('disabled', false);
+  if ((ideaTitleValue !== '') && (ideaBodyValue !== '')) {
+    $('.save-button').removeAttr('disabled', true);
+  } else {
+    disableButton();
   }
 }
 
