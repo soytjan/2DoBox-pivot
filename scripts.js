@@ -5,10 +5,7 @@ showOnLoad();
 searchIdeas();
 
 // GLOBAL VARIABLES - DECLARE THESE LOCALLY INSTEAD
-var $ideaTitle = $('.idea-title');
-var $ideaBody = $('.idea-body');
-var $saveButton = $('.save-button');
-var $searchIdeas = $('.search-ideas');
+// var $searchIdeas = $('.search-ideas');
 
 // EVENT LISTENERS REFERENCING FUNCTION ENABLEBUTTON
 $('.idea-title').keyup(enableButton);
@@ -24,7 +21,7 @@ function Idea(title, body, id) {
 }
 
 // EVENT LISTENER TO STORE AND APPEND
-$saveButton.on('click', function(e) {
+$('.save-button').on('click', function(e) {
   // PREVENT REFRESH
   e.preventDefault();
   // SEND TO STORAGE
@@ -34,25 +31,25 @@ $saveButton.on('click', function(e) {
   clearInputs();
   disableButton();
   // MOVE FOCUS TO IDEA TITLE INPUT
-  $ideaTitle.focus();
+  $('.idea-title').focus();
 })
 
 // EVENT LISTENER ENABLING ENTER KEY FOR SAVE BUTTON THEN STORE AND APPEND
-$ideaBody.on('keydown', function(e) {
+$('.idea-body').on('keydown', function(e) {
   if (e.keyCode == 13 && !e.shiftKey){
     e.preventDefault();
     storeCard();
     showStorage();
     clearInputs();
     disableButton();
-    $ideaTitle.focus();
+    $('.idea-title').focus();
   }
 });
 
 // CLEAR INPUTS FIELDS
 function clearInputs() {
-  $ideaTitle.val('');
-  $ideaBody.val('');
+  $('.idea-title').val('');
+  $('.idea-body').val('');
 };
 
 // IF IDEA TITLE AND BODY ARE EMPTY DISABLE ENTER BUTTON, IF NOT -> ENABLE
@@ -70,13 +67,13 @@ function enableButton() {
 
 // DISABLE BUTTON ON PAGE LOAD
 function disableButton() {
- $saveButton.attr('disabled', true);
+ $('.save-button').attr('disabled', true);
 }
 
 // SEND CARD TO LOCALSTORAGE AS OBJECT
 function storeCard() {
   var uniqueId = Date.now();
-  var ideaCard = new Idea($ideaTitle.val(), $ideaBody.val(), uniqueId)
+  var ideaCard = new Idea($('.idea-title').val(), $('.idea-body').val(), uniqueId)
   var stringifiedCard = JSON.stringify(ideaCard);
   localStorage.setItem(uniqueId, stringifiedCard);
 }
@@ -149,8 +146,8 @@ function searchIdeas() {
     cardsOnDom.forEach(function(card) {
       $("p").closest('div').hide();
       $("h2").closest('div').hide();
-      $("p:contains("+$searchIdeas.val()+")").closest('div').show();
-      $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
+      $("p:contains("+$('.search-ideas').val()+")").closest('div').show();
+      $("h2:contains("+$('.search-ideas').val()+")").closest('div').show();
     })
   })
 }
