@@ -1,15 +1,117 @@
-$(document).ready(function() { 
-
 // PULL EXISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
-showOnLoad();
-searchIdeas();
+$(document).ready(function() { 
+  showOnLoad();
+  searchIdeas();
+});
 
-// GLOBAL VARIABLES - DECLARE THESE LOCALLY INSTEAD
-// var $searchIdeas = $('.search-ideas');
-
-// EVENT LISTENERS REFERENCING FUNCTION ENABLEBUTTON
+// SINGLE-LINE EVENT LISTENERS
 $('.idea-title').keyup(enableButton);
 $('.idea-body').keyup(enableButton);
+$('.idea-display').on('blur', 'h2', updateTitle);
+$('.idea-display').on('blur', 'p', updateBody);
+$('.save-button').on('click', storeAndAppendIdea);
+$('.idea-body').on('keypress', enableEnterButton);
+
+
+// EVENT LISTENER FOR DELETING CARDS
+$('.idea-display').on('click', '.delete', function() {
+  var parentDiv = this.closest('div').id;
+  localStorage.removeItem(parentDiv);
+  this.closest('div').remove();
+});
+
+// EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA TITLE
+$('.idea-display').on('focus', 'h2', function() {
+  $(this).on('keypress', function(e) {
+    if (e.keyCode === 13) {
+      var parentDiv = this.closest('div');
+      parentDiv = parentDiv.id;
+      var newTitle = this.innerHTML;
+      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+      parsedIdea.title = newTitle;
+      var stringifiedIdea = JSON.stringify(parsedIdea);
+      localStorage.setItem(parentDiv, stringifiedIdea);
+      this.blur();
+    }
+  })
+})
+
+// EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA BODY
+$('.idea-display').on('focus', 'p', function() {
+  $(this).on('keypress', function(e) {
+    if(e.keyCode === 13) {
+      var parentDiv = this.closest('div').id;
+      var newBody = this.innerHTML;
+      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+      parsedIdea.body = newBody;
+      var stringifiedIdea = JSON.stringify(parsedIdea);
+      localStorage.setItem(parentDiv, stringifiedIdea);
+      this.blur();
+    }
+  })
+})
+
+// EVENT LISTENER FOR UPVOTE BUTTON
+$('.idea-display').on('click', '.upvote', function() {
+  var parentDiv = this.closest('div').id;
+  // PULL EXISTING OBJ FROM STORAGE
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+    function store() {
+      var stringifiedIdea = JSON.stringify(parsedIdea)
+      localStorage.setItem(parentDiv, stringifiedIdea)
+    }
+  parsedIdea.quality ++;
+  // IF/ELSE FOR QUALITY RATINGS & STORE CHANGES
+  if (parsedIdea.quality > 3) {
+    parsedIdea.quality = 3;
+    store();
+    return;
+  }
+  else if (parsedIdea.quality === 2) {
+    $('.'+parentDiv+'').text("Quality: Plausible");
+    store();
+  }
+  else if (parsedIdea.quality === 3){
+    $('.'+parentDiv+'').text("Quality: Genius");
+    store();
+  } 
+})
+
+
+// EVENT LISTENER FOR DOWNVOTE BUTTON
+$('.idea-display').on('click', '.downvote', function() {
+  var parentDiv = this.closest('div');
+  parentDiv = parentDiv.id;
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  function store() {
+    var stringifiedIdea = JSON.stringify(parsedIdea)
+    localStorage.setItem(parentDiv, stringifiedIdea)
+  } 
+  parsedIdea.quality --;
+  store();
+  if (parsedIdea.quality <= 1) {
+    parsedIdea.quality = 1;
+    $('.'+parentDiv+'').text("Quality: Swill");
+    store();
+    return;
+  }   
+  else if (parsedIdea.quality === 2) {
+    $('.'+parentDiv+'').text("Quality: Plausible");
+    store()
+  }
+  else if (parsedIdea.quality === 3){
+    $('.'+parentDiv+'').text("Quality: Genius");
+    store()
+  } 
+})
+
+
+
+
+// FUNCTIONS
+
+
+
 
 // CONSTRUCTOR FUNCTION
 function Idea(title, body, id) {
@@ -20,37 +122,26 @@ function Idea(title, body, id) {
   this.quality = 1;
 }
 
-// EVENT LISTENER TO STORE AND APPEND
-$('.save-button').on('click', function(e) {
-  // PREVENT REFRESH
-  e.preventDefault();
-  // SEND TO STORAGE
-  storeCard();
-  // RETRIEVE FROM STORAGE AND APPEND
-  showStorage();
-  clearInputs();
-  disableButton();
-  // MOVE FOCUS TO IDEA TITLE INPUT
-  $('.idea-title').focus();
-})
-
-// EVENT LISTENER ENABLING ENTER KEY FOR SAVE BUTTON THEN STORE AND APPEND
-$('.idea-body').on('keydown', function(e) {
-  if (e.keyCode == 13 && !e.shiftKey){
-    e.preventDefault();
-    storeCard();
-    showStorage();
-    clearInputs();
-    disableButton();
-    $('.idea-title').focus();
-  }
-});
-
-// CLEAR INPUTS FIELDS
+// CLEAR INPUT FIELDS
 function clearInputs() {
   $('.idea-title').val('');
   $('.idea-body').val('');
-};
+}
+
+function enableEnterButton(e) {
+  if (e.keyCode == 13 && !e.shiftKey) {
+  storeAndAppendIdea();
+  }
+}
+
+function storeAndAppendIdea() {
+  event.preventDefault();
+  storeCard();
+  showStorage();
+  clearInputs();
+  disableButton();
+  $('.idea-title').focus();
+}
 
 // IF IDEA TITLE AND BODY ARE EMPTY DISABLE ENTER BUTTON, IF NOT -> ENABLE
 // MH - cleaned up if/else to check first for populated fields, then disable.
@@ -65,7 +156,7 @@ function enableButton() {
   }
 }
 
-// DISABLE BUTTON ON PAGE LOAD
+// DISABLE BUTTON
 function disableButton() {
  $('.save-button').attr('disabled', true);
 }
@@ -151,86 +242,6 @@ function searchIdeas() {
     })
   })
 }
-});
-
-// EVENT LISTENER FOR DELETING CARDS
-$('.idea-display').on('click', '.delete', function() {
-  var parentDiv = this.closest('div').id;
-  localStorage.removeItem(parentDiv);
-  this.closest('div').remove();
-});
-
-// EVENT LISTENER FOR UPVOTE BUTTON
-$('.idea-display').on('click', '.upvote', function() {
-  var parentDiv = this.closest('div').id;
-  // PULL EXISTING OBJ FROM STORAGE
-  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-    function store() {
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
-    }
-  parsedIdea.quality ++;
-  // IF/ELSE FOR QUALITY RATINGS & STORE CHANGES
-  if (parsedIdea.quality > 3) {
-    parsedIdea.quality = 3;
-    store();
-    return;
-  }
-  else if (parsedIdea.quality === 2) {
-    $('.'+parentDiv+'').text("Quality: Plausible");
-    store();
-  }
-  else if (parsedIdea.quality === 3){
-    $('.'+parentDiv+'').text("Quality: Genius");
-    store();
-  } 
-});
-
-// EVENT LISTENER FOR DOWNVOTE BUTTON
-$('.idea-display').on('click', '.downvote', function() {
-  var parentDiv = this.closest('div');
-  parentDiv = parentDiv.id;
-  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  function store() {
-    var stringifiedIdea = JSON.stringify(parsedIdea)
-    localStorage.setItem(parentDiv, stringifiedIdea)
-  } 
-  parsedIdea.quality --;
-  store();
-  if (parsedIdea.quality <= 1) {
-    parsedIdea.quality = 1;
-    $('.'+parentDiv+'').text("Quality: Swill");
-    store();
-    return;
-  }   
-  else if (parsedIdea.quality === 2) {
-    $('.'+parentDiv+'').text("Quality: Plausible");
-    store()
-  }
-  else if (parsedIdea.quality === 3){
-    $('.'+parentDiv+'').text("Quality: Genius");
-    store()
-  } 
-});
-
-// EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA TITLE
-$('.idea-display').on('focus', 'h2', function() {
-  $(this).on('keypress', function(e) {
-    if (e.keyCode === 13) {
-      var parentDiv = this.closest('div');
-      parentDiv = parentDiv.id;
-      var newTitle = this.innerHTML;
-      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-      parsedIdea.title = newTitle;
-      var stringifiedIdea = JSON.stringify(parsedIdea);
-      localStorage.setItem(parentDiv, stringifiedIdea);
-      this.blur();
-    }
-  })
-})
-
-$('.idea-display').on('blur', 'h2', updateTitle);
-$('.idea-display').on('blur', 'p', updateBody);
 
 function updateTitle() {
   var parentDiv = this.closest('div').id;
@@ -240,21 +251,6 @@ function updateTitle() {
   var stringifiedIdea = JSON.stringify(parsedIdea);
   localStorage.setItem(parentDiv, stringifiedIdea);
 }
-
-// EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA BODY
-$('.idea-display').on('focus', 'p', function() {
-  $(this).on('keypress', function(e) {
-    if(e.keyCode === 13) {
-      var parentDiv = this.closest('div').id;
-      var newBody = this.innerHTML;
-      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-      parsedIdea.body = newBody;
-      var stringifiedIdea = JSON.stringify(parsedIdea);
-      localStorage.setItem(parentDiv, stringifiedIdea);
-      this.blur();
-    }
-  })
-})
 
 function updateBody() {
   var parentDiv = this.closest('div').id;
