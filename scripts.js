@@ -163,17 +163,11 @@ $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
 });
 
-// function store() {
-//   var stringifiedIdea = JSON.stringify(parsedIdea)
-//   localStorage.setItem(parentDiv, stringifiedIdea)
-// }
-
 // EVENT LISTENER FOR UPVOTE BUTTON
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div').id;
   // PULL EXISTING OBJ FROM STORAGE
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  // setItem() method of the Storage interface, when passed a key name and value, will add that key to the storage, or update that key's value if it already exists.
     function store() {
       var stringifiedIdea = JSON.stringify(parsedIdea)
       localStorage.setItem(parentDiv, stringifiedIdea)
@@ -222,20 +216,6 @@ $('.idea-display').on('click', '.downvote', function() {
   } 
 });
 
-// $('.idea-display').on('keypress', 'h2', reflectUpdatesOnEnterKeyPress());
-
-// function reflectUpdatesOnEnterKeyPress(e) {
-//   if (e.keyCode === 13) {
-//       var parentDiv = this.closest('div');
-//       parentDiv = parentDiv.id;
-//       var newTitle = this.innerHTML;
-//       var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-//       parsedIdea.title = newTitle;
-//       var stringifiedIdea = JSON.stringify(parsedIdea);
-//       localStorage.setItem(parentDiv, stringifiedIdea);
-//       this.blur();
-// }
-
 // EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA TITLE
 $('.idea-display').on('focus', 'h2', function() {
   $(this).on('keypress', function(e) {
@@ -252,25 +232,23 @@ $('.idea-display').on('focus', 'h2', function() {
   })
 })
 
-$('.idea-display').on('blur', 'h2', onBlurUpdateTitle);
-$('.idea-display').on('blur', 'p', onBlurUpdateBody);
+$('.idea-display').on('blur', 'h2', updateTitle);
+$('.idea-display').on('blur', 'p', updateBody);
 
-function onBlurUpdateTitle() {
-      var parentDiv = this.closest('div');
-      parentDiv = parentDiv.id;
-      var newTitle = this.innerHTML;
-      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-      parsedIdea.title = newTitle;
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
+function updateTitle() {
+  var parentDiv = this.closest('div').id;
+  var newTitle = this.innerHTML;
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  parsedIdea.title = newTitle;
+  var stringifiedIdea = JSON.stringify(parsedIdea);
+  localStorage.setItem(parentDiv, stringifiedIdea);
 }
 
 // EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA BODY
 $('.idea-display').on('focus', 'p', function() {
   $(this).on('keypress', function(e) {
     if(e.keyCode === 13) {
-      var parentDiv = this.closest('div');
-      parentDiv = parentDiv.id;
+      var parentDiv = this.closest('div').id;
       var newBody = this.innerHTML;
       var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
       parsedIdea.body = newBody;
@@ -279,23 +257,13 @@ $('.idea-display').on('focus', 'p', function() {
       this.blur();
     }
   })
-  // $(this).on('blur', function(event) {
-  //     var parentDiv = this.closest('div');
-  //     parentDiv = parentDiv.id;
-  //     var newBody = this.innerHTML;
-  //     var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  //     parsedIdea.body = newBody;
-  //     var stringifiedIdea = JSON.stringify(parsedIdea)
-  //     localStorage.setItem(parentDiv, stringifiedIdea)
-  // })
 })
 
-function onBlurUpdateBody() {
-  var parentDiv = this.closest('div');
-  parentDiv = parentDiv.id;
+function updateBody() {
+  var parentDiv = this.closest('div').id;
   var newBody = this.innerHTML;
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
   parsedIdea.body = newBody;
-  var stringifiedIdea = JSON.stringify(parsedIdea)
-  localStorage.setItem(parentDiv, stringifiedIdea)
+  var stringifiedIdea = JSON.stringify(parsedIdea);
+  localStorage.setItem(parentDiv, stringifiedIdea);
 }
