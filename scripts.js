@@ -147,26 +147,14 @@ function searchIdeas(){
   var cardsOnDom = Array.from($('.card'));
   // COULD POSSIBLY JUST LISTEN FOR KEYUP
   $('.search-ideas').on('change keyup', function(event) {
-     cardsOnDom.forEach(function(card) {
-      //  QUESTION: what does this if statement do??? Doesn't seem like we need it at all. Search works with it commented out.  
-
-      // if ($searchIdeas.val() === '') {
-      //   $("p").closest('div').show();
-      //   $("h2").closest('div').show();
-      // }
-      // MAYBE WE SHOULD MAKE P:CONTAINS(...) AND H2:CONTAINS(...) BOTH VARIABLES??
-       // else {
-        console.log($("h2:contains("+$searchIdeas.val()+")"));
-        ($("p:contains("+$searchIdeas.val()+")") === $searchIdeas.val() || $("h2:contains("+$searchIdeas.val()+")") === $searchIdeas.val());
-        $("p").closest('div').hide();
-        $("h2").closest('div').hide();
-        $("p:contains("+$searchIdeas.val()+")").closest('div').show();
-        $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
-      // }
+    cardsOnDom.forEach(function(card) {
+      $("p").closest('div').hide();
+      $("h2").closest('div').hide();
+      $("p:contains("+$searchIdeas.val()+")").closest('div').show();
+      $("h2:contains("+$searchIdeas.val()+")").closest('div').show();
     })
   })
 }
-
 });
 
 // EVENT LISTENER FOR DELETING CARDS
