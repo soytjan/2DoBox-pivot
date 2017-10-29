@@ -1,32 +1,43 @@
 $(document).ready(function() { 
 
+// PULL EXISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 showOnLoad();
 searchIdeas();
 
+// GLOBAL VARIABLES - DECLARE THESE LOCALLY INSTEAD
 var $ideaTitle = $('.idea-title');
 var $ideaBody = $('.idea-body');
 var $saveButton = $('.save-button');
 var $searchIdeas = $('.search-ideas');
 
+// EVENT LISTENERS REFERENCING FUNCTION ENABLEBUTTON
 $('.idea-title').keyup(enableButton);
 $('.idea-body').keyup(enableButton);
 
+// CONSTRUCTOR FUNCTION
 function Idea(title, body, id) {
   this.title = title;
   this.body = body;
   this.id = id;
+  // ASSIGN NUMBER TO QUALITY RATHER THAN CREATE AN ARRAY
   this.quality = 1;
 }
 
+// EVENT LISTENER TO STORE AND APPEND
 $saveButton.on('click', function(e) {
+  // PREVENT REFRESH
   e.preventDefault();
+  // SEND TO STORAGE
   storeCard();
+  // RETRIEVE FROM STORAGE AND APPEND
   showStorage();
   clearInputs();
   disableButton();
+  // MOVE FOCUS TO IDEA TITLE INPUT
   $ideaTitle.focus();
 })
 
+// EVENT LISTENDER ENABLING ENTER KEY FOR SAVE BUTTON THEN STORE AND APPEND
 $ideaBody.on('keydown', function(e) {
   if (e.keyCode == 13 && !e.shiftKey){
     e.preventDefault();
@@ -38,11 +49,13 @@ $ideaBody.on('keydown', function(e) {
   }
 });
 
+// CLEAR INPUTS FIELDS
 function clearInputs() {
   $ideaTitle.val('');
   $ideaBody.val('');
 };
 
+// IF IDEA TITLE AND BODY ARE EMPTY DISABLE ENTER BUTTON, IF NOT -> ENABLE
 function enableButton() {
   if ($('.idea-title').val() === "" || $('.idea-body').val() === "") {
     $('.save-button').attr('disabled', true);
@@ -52,10 +65,12 @@ function enableButton() {
   }
 }
 
+// DISABLE BUTTON ON PAGE LOAD
 function disableButton() {
  $saveButton.attr('disabled', true);
 }
 
+// SEND CARD TO LOCALSTORAGE AS OBJECT
 function storeCard() {
   var uniqueId = Date.now();
   var ideaCard = new Idea($ideaTitle.val(), $ideaBody.val(), uniqueId)
@@ -63,24 +78,29 @@ function storeCard() {
   localStorage.setItem(uniqueId, stringifiedCard);
 }
 
+// RETRIEVE OBJECT FROM LOCALSTORAGE AND APPEND ON PAGE WITH QUALITY OF SWILL
 function showStorage () {
   var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     ideaArray.push(parsed)
-    var card = `<div id=${ideaArray[i].id} class="card">
-                  <h2 contenteditable="true">${ideaArray[i].title}</h2>
-                  <span class="svg delete" title="delete-button" alt="delete idea"></span>
-                  <p contenteditable="true">${ideaArray[i].body}</p>
-                  <span class="svg upvote" alt="up vote"></span>
-                  <span class="svg downvote" alt="down vote"></span>
-                  <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
-                </div>`   
+    var card = 
+      `
+      <div id=${ideaArray[i].id} class="card">
+        <h2 contenteditable="true">${ideaArray[i].title}</h2>
+        <span class="svg delete" title="delete-button" alt="delete idea"></span>
+        <p contenteditable="true">${ideaArray[i].body}</p>
+        <span class="svg upvote" alt="up vote"></span>
+        <span class="svg downvote" alt="down vote"></span>
+        <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
+      </div>
+      `   
   }
   $('.idea-display').append(card);
 }
 
+// PULL EXISISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 function showOnLoad() {
   var ideaArray = [];
   for (var i = 0; i < localStorage.length; i++) {
@@ -92,6 +112,8 @@ function showOnLoad() {
   }
 }
 
+// ASSIGN QUALITY TO CARD AND SHOW
+// QUALITYS ARE ASSOCIATED WITH A NUMBER (1,2,3) AND WILL ITERATE THRU NUMBERS RATHER THAN ARRAY
 function assignQuality(idea) {
   var qualityWord = '';
   if (idea.quality == 1) {
@@ -101,26 +123,34 @@ function assignQuality(idea) {
   } else if (idea.quality == 3) {
     qualityWord = 'Quality: Genius'
   }
- var card = `<div id=${idea.id} class="card">
-                <h2 contenteditable="true">${idea.title}</h2>
-                <span class="svg delete" title="delete-button" alt="delete idea"></span>
-                <p contenteditable="true">${idea.body}</p>
-                <span class="svg upvote" alt="up vote"></span>
-                <span class="svg downvote" alt="down vote"></span>
-                <span id="quality" class=${idea.id}>${qualityWord}</span>
-              </div>`
+  var card = 
+    `
+    <div id=${idea.id} class="card">
+      <h2 contenteditable="true">${idea.title}</h2>
+      <span class="svg delete" title="delete-button" alt="delete idea"></span>
+      <p contenteditable="true">${idea.body}</p>
+      <span class="svg upvote" alt="up vote"></span>
+      <span class="svg downvote" alt="down vote"></span>
+      <span id="quality" class=${idea.id}>${qualityWord}</span>
+    </div>
+    `
   return card;
 }
 
+// SEARCH FUNCTIONALITY
 function searchIdeas(){
+  // .FROM() METHOD CREATE A NEW ARRAY INSTANCE FROM AN ARRAY-LIKE OR ITERABLE OBJECT
   var cardsOnDom = Array.from($('.card'));
+  // COULD POSSIBLY JUST LISTEN FOR KEYUP
   $('.search-ideas').on('change keyup', function(event) {
      cardsOnDom.forEach(function(card) {
+      //  QUESTION: what does this do??? lol
       if ($searchIdeas.val() === '') {
         $("p").closest('div').show();
         $("h2").closest('div').show();
-      } 
-      else {
+      }
+      // MAYBE WE SHOULD MAKE P:CONTAINS(...) AND H2:CONTAINS(...) BOTH VARIABLES??
+       else {
         ($("p:contains("+$searchIdeas.val()+")") === $searchIdeas.val() || $("h2:contains("+$searchIdeas.val()+")") === $searchIdeas.val());
         $("p").closest('div').hide();
         $("h2").closest('div').hide();
@@ -133,6 +163,7 @@ function searchIdeas(){
 
 });
 
+// EVENT LISTENER FOR DELETING CARDS
 $('.idea-display').on('click', '.delete', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
@@ -140,16 +171,21 @@ $('.idea-display').on('click', '.delete', function() {
   this.closest('div').remove();
 });
 
+// EVENT LISTENER FOR UPVOTE BUTTON
 $('.idea-display').on('click', '.upvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
+  // PULL EXISTING OBJ FROM STORAGE
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  // setItem() method of the Storage interface, when passed a key name and value, will add that key to the storage, or update that key's value if it already exists.
     function store() {
       var stringifiedIdea = JSON.stringify(parsedIdea)
       localStorage.setItem(parentDiv, stringifiedIdea)
     }
   parsedIdea.quality++;
+  // CHANGE VALUES OF OBJ
   store();
+  // IF/ELSE FOR QUALITY RATINGS
   if (parsedIdea.quality > 3) {
     parsedIdea.quality = 3;
     store();
@@ -165,6 +201,7 @@ $('.idea-display').on('click', '.upvote', function() {
   } 
 });
 
+// EVENT LISTENER FOR DOWNVOTE BUTTON
 $('.idea-display').on('click', '.downvote', function() {
   var parentDiv = this.closest('div');
   parentDiv = parentDiv.id;
@@ -191,6 +228,7 @@ $('.idea-display').on('click', '.downvote', function() {
   } 
 });
 
+// EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA TITLE
 $('.idea-display').on('focus', 'h2', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
@@ -219,6 +257,7 @@ $('.idea-display').on('focus', 'h2', function() {
   })
 })
 
+// EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA BODY
 $('.idea-display').on('focus', 'p', function() {
   $(this).on('keypress', function(e) {
     var key = e.which || e.keyCode;
@@ -245,4 +284,3 @@ $('.idea-display').on('focus', 'p', function() {
       localStorage.setItem(parentDiv, stringifiedIdea)
   })
 })
-
