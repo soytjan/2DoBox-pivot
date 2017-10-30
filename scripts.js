@@ -56,16 +56,15 @@ function clearInputs() {
 };
 
 // IF IDEA TITLE AND BODY ARE EMPTY DISABLE ENTER BUTTON, IF NOT -> ENABLE
-// MH - declared values as variables to shorten line length.
+// MH - cleaned up if/else to check first for populated fields, then disable.
 function enableButton() {
   var ideaTitleValue = $('.idea-title').val();
   var ideaBodyValue = $('.idea-body').val();
 
-  if (ideaTitleValue === "" || ideaBodyValue === "") {
-    $('.save-button').attr('disabled', true);
-  }
-  else {
-    $('.save-button').removeAttr('disabled', false);
+  if ((ideaTitleValue !== '') && (ideaBodyValue !== '')) {
+    $('.save-button').removeAttr('disabled', true);
+  } else {
+    disableButton();
   }
 }
 
@@ -142,7 +141,7 @@ function assignQuality(idea) {
 }
 
 // SEARCH FUNCTIONALITY
-function searchIdeas(){
+function searchIdeas() {
   // .FROM() METHOD CREATE A NEW ARRAY INSTANCE FROM AN ARRAY-LIKE OR ITERABLE OBJECT
   var cardsOnDom = Array.from($('.card'));
   // COULD POSSIBLY JUST LISTEN FOR KEYUP
@@ -159,27 +158,22 @@ function searchIdeas(){
 
 // EVENT LISTENER FOR DELETING CARDS
 $('.idea-display').on('click', '.delete', function() {
-  var parentDiv = this.closest('div');
-  parentDiv = parentDiv.id;
+  var parentDiv = this.closest('div').id;
   localStorage.removeItem(parentDiv);
   this.closest('div').remove();
 });
 
 // EVENT LISTENER FOR UPVOTE BUTTON
 $('.idea-display').on('click', '.upvote', function() {
-  var parentDiv = this.closest('div');
-  parentDiv = parentDiv.id;
+  var parentDiv = this.closest('div').id;
   // PULL EXISTING OBJ FROM STORAGE
   var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-  // setItem() method of the Storage interface, when passed a key name and value, will add that key to the storage, or update that key's value if it already exists.
     function store() {
       var stringifiedIdea = JSON.stringify(parsedIdea)
       localStorage.setItem(parentDiv, stringifiedIdea)
     }
-  parsedIdea.quality++;
-  // CHANGE VALUES OF OBJ
-  store();
-  // IF/ELSE FOR QUALITY RATINGS
+  parsedIdea.quality ++;
+  // IF/ELSE FOR QUALITY RATINGS & STORE CHANGES
   if (parsedIdea.quality > 3) {
     parsedIdea.quality = 3;
     store();
@@ -204,7 +198,7 @@ $('.idea-display').on('click', '.downvote', function() {
     var stringifiedIdea = JSON.stringify(parsedIdea)
     localStorage.setItem(parentDiv, stringifiedIdea)
   } 
-  parsedIdea.quality--;
+  parsedIdea.quality --;
   store();
   if (parsedIdea.quality <= 1) {
     parsedIdea.quality = 1;
@@ -225,56 +219,51 @@ $('.idea-display').on('click', '.downvote', function() {
 // EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA TITLE
 $('.idea-display').on('focus', 'h2', function() {
   $(this).on('keypress', function(e) {
-    var key = e.which || e.keyCode;
-        var key = e.which || e.keyCode;
-    if (key === 13 && e.shiftKey) {
-    }
-    else if (key === 13 || this.blur === true) {
-      e.preventDefault();
+    if (e.keyCode === 13) {
       var parentDiv = this.closest('div');
       parentDiv = parentDiv.id;
       var newTitle = this.innerHTML;
       var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
       parsedIdea.title = newTitle;
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
+      var stringifiedIdea = JSON.stringify(parsedIdea);
+      localStorage.setItem(parentDiv, stringifiedIdea);
+      this.blur();
     }
-  })
-  $(this).on('blur', function(event) {
-      var parentDiv = this.closest('div');
-      parentDiv = parentDiv.id;
-      var newTitle = this.innerHTML;
-      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-      parsedIdea.title = newTitle;
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
   })
 })
+
+$('.idea-display').on('blur', 'h2', updateTitle);
+$('.idea-display').on('blur', 'p', updateBody);
+
+function updateTitle() {
+  var parentDiv = this.closest('div').id;
+  var newTitle = this.innerHTML;
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  parsedIdea.title = newTitle;
+  var stringifiedIdea = JSON.stringify(parsedIdea);
+  localStorage.setItem(parentDiv, stringifiedIdea);
+}
 
 // EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA BODY
 $('.idea-display').on('focus', 'p', function() {
   $(this).on('keypress', function(e) {
-    var key = e.which || e.keyCode;
-    if (key === 13 && e.shiftKey) {
-    }
-    else if(key === 13) {
-      e.preventDefault();
-      var parentDiv = this.closest('div');
-      parentDiv = parentDiv.id;
+    if(e.keyCode === 13) {
+      var parentDiv = this.closest('div').id;
       var newBody = this.innerHTML;
       var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
       parsedIdea.body = newBody;
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
+      var stringifiedIdea = JSON.stringify(parsedIdea);
+      localStorage.setItem(parentDiv, stringifiedIdea);
+      this.blur();
     }
-  })
-  $(this).on('blur', function(event) {
-      var parentDiv = this.closest('div');
-      parentDiv = parentDiv.id;
-      var newBody = this.innerHTML;
-      var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
-      parsedIdea.body = newBody;
-      var stringifiedIdea = JSON.stringify(parsedIdea)
-      localStorage.setItem(parentDiv, stringifiedIdea)
   })
 })
+
+function updateBody() {
+  var parentDiv = this.closest('div').id;
+  var newBody = this.innerHTML;
+  var parsedIdea = JSON.parse(localStorage.getItem(parentDiv));
+  parsedIdea.body = newBody;
+  var stringifiedIdea = JSON.stringify(parsedIdea);
+  localStorage.setItem(parentDiv, stringifiedIdea);
+}
