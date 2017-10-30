@@ -11,14 +11,13 @@ $('.idea-display').on('blur', 'h2', updateTitle);
 $('.idea-display').on('blur', 'p', updateBody);
 $('.save-button').on('click', storeAndAppendIdea);
 $('.idea-body').on('keypress', enableEnterButton);
+$('.idea-display').on('click', '.delete', deleteCards);
 
-
-// EVENT LISTENER FOR DELETING CARDS
-$('.idea-display').on('click', '.delete', function() {
+function deleteCards() {
   var parentDiv = this.closest('div').id;
   localStorage.removeItem(parentDiv);
   this.closest('div').remove();
-});
+}
 
 // EVENT LISTENER FOR ENTER KEYPRESS ON EDITABLE CONTENT OF IDEA TITLE
 $('.idea-display').on('focus', 'h2', function() {
@@ -169,27 +168,7 @@ function storeCard() {
   localStorage.setItem(uniqueId, stringifiedCard);
 }
 
-// RETRIEVE OBJECT FROM LOCALSTORAGE AND APPEND ON PAGE WITH QUALITY OF SWILL
-function showStorage () {
-  var ideaArray = [];
-  for (var i = 0; i < localStorage.length; i++) {
-    var retrieved = localStorage.getItem(localStorage.key(i));
-    var parsed = JSON.parse(retrieved);
-    ideaArray.push(parsed)
-    var card = 
-      `
-      <div id=${ideaArray[i].id} class="card">
-        <h2 contenteditable="true">${ideaArray[i].title}</h2>
-        <span class="svg delete" title="delete-button" alt="delete idea"></span>
-        <p contenteditable="true">${ideaArray[i].body}</p>
-        <span class="svg upvote" alt="up vote"></span>
-        <span class="svg downvote" alt="down vote"></span>
-        <span id="quality" class=${ideaArray[i].id}>Quality: Swill</span>
-      </div>
-      `   
-  }
-  $('.idea-display').append(card);
-}
+
 
 // PULL EXISISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 function showOnLoad() {
@@ -215,6 +194,22 @@ function assignQuality(idea) {
     qualityWord = 'Quality: Genius'
   }
   var card = 
+    // `
+    // <div id=${idea.id} class="card">
+    //   <h2 contenteditable="true">${idea.title}</h2>
+    //   <span class="svg delete" title="delete-button" alt="delete idea"></span>
+    //   <p contenteditable="true">${idea.body}</p>
+    //   <span class="svg upvote" alt="up vote"></span>
+    //   <span class="svg downvote" alt="down vote"></span>
+    //   <span id="quality" class=${idea.id}>${qualityWord}</span>
+    // </div>
+    // `
+  return card;
+}
+
+
+function prependCard() {
+  $('.idea-display').prepend(
     `
     <div id=${idea.id} class="card">
       <h2 contenteditable="true">${idea.title}</h2>
@@ -225,8 +220,9 @@ function assignQuality(idea) {
       <span id="quality" class=${idea.id}>${qualityWord}</span>
     </div>
     `
-  return card;
+  )
 }
+
 
 // SEARCH FUNCTIONALITY
 function searchIdeas() {
