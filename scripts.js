@@ -104,6 +104,13 @@ function enableSaveButton() {
   }
 }
 
+function parseAndStringifyUpdates(obj, variable) {
+  var parsedObject = JSON.parse(localStorage.getItem(obj));
+  parsedObject.title = variable;
+  var stringifiedObject = JSON.stringify(parsedObject);
+  localStorage.setItem(parentDiv, stringifiedObject);
+}
+
 function prependCard(card) {
   var quality = assignQuality(card);
   $('.card-display').prepend(
@@ -155,19 +162,21 @@ function storeCard(card) {
 function updateTitle() {
   var parentDiv = this.closest('div').id;
   var newTitle = this.innerHTML;
-  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-  parsedObject.title = newTitle;
-  var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentDiv, stringifiedObject);
+  parseAndStringifyUpdates(parentDiv, newTitle);
+  // var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  // parsedObject.title = newTitle;
+  // var stringifiedObject = JSON.stringify(parsedObject);
+  // localStorage.setItem(parentDiv, stringifiedObject);
 }
 
 function updateBody() {
   var parentDiv = this.closest('div').id;
   var newBody = this.innerHTML;
-  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-  parsedObject.body = newBody;
-  var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentDiv, stringifiedObject);
+  parseAndStringifyUpdates(parentDiv, newBody);
+  // var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  // parsedObject.body = newBody;
+  // var stringifiedObject = JSON.stringify(parsedObject);
+  // localStorage.setItem(parentDiv, stringifiedObject);
 }
 
 function upvoteQuality() {
