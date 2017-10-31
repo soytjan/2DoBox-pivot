@@ -1,6 +1,7 @@
 // PULL EXISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 $(document).ready(function() { 
   showOnLoad();
+  $('.completed').hide();
 });
 
 // SINGLE-LINE EVENT LISTENERS
@@ -15,8 +16,38 @@ $('.card-display').on('keypress', 'p', prevCarriageReturnBody);
 $('.card-display').on('click', '.upvote', upvoteQuality);
 $('.card-display').on('click', '.downvote', downvoteQuality);
 $('.card-display').on('click', '.delete', deleteCards);
-$('.search-cards').on('keyup', searchCards);
+$('.filter-cards').on('keyup', searchCards);
 
+$('.card-display').on('click', '.mark-completed-button', updateCompleted);
+
+// function toggleClassCompleted() {
+//   var currentCardId = this.closest('div').id;
+//   $(`#${currentCardId}`).toggleClass( "completed" );
+// }
+
+// function updateTitle() {
+//   var parentDiv = this.closest('div').id;
+//   var newTitle = this.innerHTML;
+//   // parseAndStringifyUpdates(parentDiv, newTitle);
+//   var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+//   parsedObject.title = newTitle;
+//   var stringifiedObject = JSON.stringify(parsedObject);
+//   localStorage.setItem(parentDiv, stringifiedObject);
+// }
+
+function updateCompleted() {
+  var parentDivId = this.closest('div').id;
+  var parsedObject = JSON.parse(localStorage.getItem(parentDivId));
+  if(parsedObject.completed === false) {
+    parsedObject.completed = true;
+    $(`#${parentDivId}`).addClass('completed');
+  } else {
+    parsedObject.completed = false;
+    $(`#${parentDivId}`).removeClass('completed');
+  }
+  // $(`#${currentCardId}`).toggleClass( "completed" );
+  storeCard(parsedObject);
+}
 
 function prevCarriageReturnTitle() {
   if (event.keyCode === 13) {
@@ -59,6 +90,7 @@ function Card(title, body, id) {
   this.body = body;
   this.id = id;
   this.quality = 3;
+  this.completed = false;
 }
 
 function clearInputs() {
@@ -99,12 +131,12 @@ function enableSaveButton() {
   }
 }
 
-function parseAndStringifyUpdates(obj, variable) {
-  var parsedObject = JSON.parse(localStorage.getItem(obj));
-  parsedObject.title = variable;
-  var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentDiv, stringifiedObject);
-}
+// function parseAndStringifyUpdates(objKey, variable) {
+//   var parsedObject = JSON.parse(localStorage.getItem(objKey));
+//   parsedObject.title = variable;
+//   var stringifiedObject = JSON.stringify(parsedObject);
+//   localStorage.setItem(objKey, stringifiedObject);
+// }
 
 function prependCard(card) {
   var quality = assignQuality(card);
@@ -117,6 +149,7 @@ function prependCard(card) {
       <span class="svg upvote" alt="up vote"></span>
       <span class="svg downvote" alt="down vote"></span>
       <span id="quality" class=${card.id}>${quality}</span>
+      <button class="mark-completed-button">Mark Completed</button>
     </div>
     `
   )
@@ -128,14 +161,14 @@ function searchCards() {
     cardsOnDom.forEach(function(card) {
       $("p").closest('div').hide();
       $("h2").closest('div').hide();
-      $("p:contains("+$('.search-cards').val()+")").closest('div').show();
-      $("h2:contains("+$('.search-cards').val()+")").closest('div').show();
+      $("p:contains("+$('.filter-cards').val()+")").closest('div').show();
+      $("h2:contains("+$('.filter-cards').val()+")").closest('div').show();
     })
 }
 
 // function searchCards() {
 //   var cardObjectArray = findExistingCards();
-//   var userSearchInput = $('.search-cards').val().toUpperCase();
+//   var userSearchInput = $('.filter-cards').val().toUpperCase();
 //   var filteredCards = cardObjectsArray.filter(function(object) {
 //     var upperCaseObjBody = object['body'].toUpperCase();
 //     var upperCaseObjTitle = object['title'].toUpperCase();
@@ -156,7 +189,7 @@ function searchCards() {
 
 // function populateExistingCards(keyValues) {
 //   for(var i = 0; i < keyValues.length; i++) {
-    
+
 //   }
 // }
 
@@ -181,24 +214,25 @@ function storeCard(card) {
   localStorage.setItem(card.id, stringifiedCard);
 }
 
+// Take a look at using storeCard function with this
 function updateTitle() {
   var parentDiv = this.closest('div').id;
   var newTitle = this.innerHTML;
-  parseAndStringifyUpdates(parentDiv, newTitle);
-  // var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-  // parsedObject.title = newTitle;
-  // var stringifiedObject = JSON.stringify(parsedObject);
-  // localStorage.setItem(parentDiv, stringifiedObject);
+  // parseAndStringifyUpdates(parentDiv, newTitle);
+  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  parsedObject.title = newTitle;
+  var stringifiedObject = JSON.stringify(parsedObject);
+  localStorage.setItem(parentDiv, stringifiedObject);
 }
 
 function updateBody() {
   var parentDiv = this.closest('div').id;
   var newBody = this.innerHTML;
-  parseAndStringifyUpdates(parentDiv, newBody);
-  // var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-  // parsedObject.body = newBody;
-  // var stringifiedObject = JSON.stringify(parsedObject);
-  // localStorage.setItem(parentDiv, stringifiedObject);
+  // parseAndStringifyUpdates(parentDiv, newBody);
+  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  parsedObject.body = newBody;
+  var stringifiedObject = JSON.stringify(parsedObject);
+  localStorage.setItem(parentDiv, stringifiedObject);
 }
 
 function upvoteQuality() {
