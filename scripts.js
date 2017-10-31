@@ -28,6 +28,7 @@ function prevCarriageReturnTitle() {
   }
 }
 
+// make a function to put line 34 and 35 
 function prevCarriageReturnBody() {
   if (event.keyCode === 13) {
     var cardKey = this.closest('div').id;
@@ -38,24 +39,18 @@ function prevCarriageReturnBody() {
   }
 }
 
-// Should we make another function that assigns the input? i.e. title or body
-// function prevCarriageReturn(input) {
-//     if (event.keyCode === 13) {
-//     var cardKey = this.closest('div').id;
-//     var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-//     parsedObject['input'] = this.innerText;
-//     storeCard(parsedObject);
-//     this.blur();
-//   }
-// }
-
+// do it as an array -MICHELLE
 function assignQuality(card) {
-  if (card.quality == 1) {
-    return 'Quality: Swill';
-  } else if (card.quality == 2) {
-    return 'Quality: Plausible';
-  } else if (card.quality == 3) {
-    return 'Quality: Genius';
+  if (card.quality === 1) {
+    return 'Quality: None';
+  } else if (card.quality === 2) {
+    return 'Quality: Low';
+  } else if (card.quality === 3) {
+    return 'Quality: Normal';
+  } else if (card.quality === 4) {
+    return 'Quality: High';
+  } else if (card.quality === 5) {
+    return 'Quality: Critical';
   }
 }
 
@@ -63,7 +58,7 @@ function Card(title, body, id) {
   this.title = title;
   this.body = body;
   this.id = id;
-  this.quality = 1;
+  this.quality = 3;
 }
 
 function clearInputs() {
@@ -127,7 +122,7 @@ function prependCard(card) {
   )
 }
 
-// look into making NOT case sensitive
+// look into making NOT case sensitive -- check where it's being called and if it's only being called in one place --rewrite
 function searchCards() {
   var cardsOnDom = Array.from($('.card'));
     cardsOnDom.forEach(function(card) {
@@ -137,6 +132,33 @@ function searchCards() {
       $("h2:contains("+$('.search-cards').val()+")").closest('div').show();
     })
 }
+
+// function searchCards() {
+//   var cardObjectArray = findExistingCards();
+//   var userSearchInput = $('.search-cards').val().toUpperCase();
+//   var filteredCards = cardObjectsArray.filter(function(object) {
+//     var upperCaseObjBody = object['body'].toUpperCase();
+//     var upperCaseObjTitle = object['title'].toUpperCase();
+//     return upperCaseObjBody.match(userSearchInput) || upperCaseObjTitle.match(userSearchInput);
+//   })
+//   $('.card-display').text('');
+//   populateExistingCards(filteredCards);
+// }
+
+// function findExistingCards() {
+//   var keyValues = [];
+//   var keys = Object.keys(localStorage);
+//   for (var i = 0; i < keys.length; i++) {
+//     keyValues.push(JSON.parse(localStorage.getItem(keys[i])));
+//   }
+//   return keyValues;
+// }
+
+// function populateExistingCards(keyValues) {
+//   for(var i = 0; i < keyValues.length; i++) {
+    
+//   }
+// }
 
 function showOnLoad() {
   for (var i = 0; i < localStorage.length; i++) {
@@ -182,7 +204,7 @@ function updateBody() {
 function upvoteQuality() {
   var cardKey = this.closest('div').id;
   var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-  if(parsedObject.quality < 3) {
+  if(parsedObject.quality < 5) {
     parsedObject.quality ++;
   } 
   storeCard(parsedObject);
