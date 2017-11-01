@@ -8,8 +8,6 @@ body {
   margin: auto;
   text-align: center;
   font-size: 1em;
-
-
 }
 
 h1,
@@ -74,6 +72,10 @@ p:focus {
 
 .completed {
   background-color: magenta;
+}
+
+.hide {
+  display: none;
 }
 
 .card-title {
