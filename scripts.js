@@ -168,7 +168,7 @@ function prependCard(card) {
         <span class="svg upvote" name="up-vote-button"></span>
         <span class="svg downvote" name="down-vote-button"></span>
         <h3 class="quality"><span class=${card.id}>${quality}</span></h3>
-        <button class="mark-completed-button">Mark Completed</button>
+        <button class="mark-completed-button gray-text-button">Mark Completed</button>
       </div>  
     </article>
     `
