@@ -1,7 +1,6 @@
 // PULL EXISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 $(document).ready(function() { 
   showOnLoad();
-  $('.completed').hide();
 });
 
 // SINGLE-LINE EVENT LISTENERS
@@ -17,8 +16,8 @@ $('.card-display').on('click', '.upvote', upvoteQuality);
 $('.card-display').on('click', '.downvote', downvoteQuality);
 $('.card-display').on('click', '.delete', deleteCards);
 $('.filter-cards').on('keyup', searchCards);
-
 $('.card-display').on('click', '.mark-completed-button', updateCompleted);
+$('.show-completed').on('click', parseCompletedAndShow);
 
 // function toggleClassCompleted() {
 //   var currentCardId = this.closest('div').id;
@@ -201,14 +200,25 @@ function showOnLoad() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     hideCompletedOnLoad(parsed);
-    // if (parsed.completed === false) {
-    //   prependCard(parsed)
-    // }
   }
 }
 
 function hideCompletedOnLoad(obj) {
   if(obj.completed === false) {
+    prependCard(obj);
+  }
+}
+
+function parseCompletedAndShow() {
+  for (var i = 0; i < localStorage.length; i++) {
+    var retrieved = localStorage.getItem(localStorage.key(i));
+    var parsed = JSON.parse(retrieved);
+    showCompleted(parsed);
+  }
+}
+
+function showCompleted(obj) {
+  if(obj.completed === true) {
     prependCard(obj);
   }
 }
