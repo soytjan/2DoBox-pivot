@@ -233,7 +233,7 @@ function showCompleted() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     if(parsed.completed === true) {
-      $(`#${localStorage.key(i)}`).removeClass( "hide" );
+      $('.card-display').prepend($(`#${localStorage.key(i)}`).removeClass('hide'));
     }
   }
 }
