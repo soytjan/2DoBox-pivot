@@ -17,7 +17,7 @@ $('.card-display').on('click', '.downvote', downvoteQuality);
 $('.card-display').on('click', '.delete', deleteCards);
 $('.filter-cards').on('keyup', searchCards);
 $('.card-display').on('click', '.mark-completed-button', updateCompleted);
-$('.show-completed').on('click', parseCompletedAndShow);
+$('.show-completed').on('click', showCompleted);
 
 // function toggleClassCompleted() {
 //   var currentCardId = this.closest('div').id;
@@ -34,17 +34,17 @@ $('.show-completed').on('click', parseCompletedAndShow);
 //   localStorage.setItem(parentDiv, stringifiedObject);
 // }
 
+
 function updateCompleted() {
   var parentArticleId = this.closest('article').id;
   var parsedObject = JSON.parse(localStorage.getItem(parentArticleId));
   if(parsedObject.completed === false) {
     parsedObject.completed = true;
-    // $(`#${parentArticleId}`).addClass('completed');
+    $(`#${parentArticleId}`).addClass( "completed" );
   } else {
     parsedObject.completed = false;
-    // $(`#${parentArticleId}`).removeClass('completed');
+    $(`#${parentArticleId}`).removeClass( "completed" );
   }
-  $(`#${parentArticleId}`).toggleClass( "completed" );
   storeCard(parsedObject);
 }
 
@@ -131,11 +131,29 @@ function enableSaveButton() {
   }
 }
 
+// function hideCompletedOnLoad(obj) {
+//   if(obj.completed === false) {
+//     prependCard(obj);
+//   }
+// }
+
 // function parseAndStringifyUpdates(objKey, variable) {
 //   var parsedObject = JSON.parse(localStorage.getItem(objKey));
 //   parsedObject.title = variable;
 //   var stringifiedObject = JSON.stringify(parsedObject);
 //   localStorage.setItem(objKey, stringifiedObject);
+// }
+
+// Make a different class to hide the 
+
+// function parseCompletedAndShow() {
+//   for (var i = 0; i < localStorage.length; i++) {
+//     var retrieved = localStorage.getItem(localStorage.key(i));
+//     var parsed = JSON.parse(retrieved);
+//     // $(`#${parentArticleId}`).toggleClass( "completed" )
+//     console.log(this);
+//     // showCompleted(parsed);
+//   }
 // }
 
 function prependCard(card) {
@@ -195,32 +213,38 @@ function searchCards() {
 //   }
 // }
 
+// Apply a class to hide and use display: none; 
+
 function showOnLoad() {
   for (var i = 0; i < localStorage.length; i++) {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
-    hideCompletedOnLoad(parsed);
+    prependCard(parsed)
+    if(parsed.completed === true) {
+      $(`#${localStorage.key(i)}`).addClass( "completed" );
+      $(`#${localStorage.key(i)}`).addClass( "hide" );
+    }
+    // hideCompletedOnLoad(parsed);
   }
 }
 
-function hideCompletedOnLoad(obj) {
-  if(obj.completed === false) {
-    prependCard(obj);
-  }
-}
-
-function parseCompletedAndShow() {
+function showCompleted() {
   for (var i = 0; i < localStorage.length; i++) {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
-    showCompleted(parsed);
+    if(parsed.completed === true) {
+      $(`#${localStorage.key(i)}`).removeClass( "hide" );
+    }
   }
 }
 
-function showCompleted(obj) {
-  if(obj.completed === true) {
-    prependCard(obj);
-  }
+function showTen(obj) {
+  var maxCards = 10;
+  if($('.card-display').length > maxCards) {
+    for (var i = 0; i > 10; i++) {
+      this.hide();
+    } 
+  } 
 }
 
 function storeAndAppend() {
@@ -259,7 +283,6 @@ function updateBody() {
 
 function upvoteQuality() {
   var cardKey = this.closest('article').id;
-  console.log(this);
   var parsedObject = JSON.parse(localStorage.getItem(cardKey));
   if(parsedObject.quality < 5) {
     parsedObject.quality ++;
@@ -270,7 +293,6 @@ function upvoteQuality() {
 
 function downvoteQuality() {
   var cardKey = this.closest('article').id;
-  console.log(this);
   var parsedObject = JSON.parse(localStorage.getItem(cardKey));
   if(parsedObject.quality > 1) {
     parsedObject.quality --;
