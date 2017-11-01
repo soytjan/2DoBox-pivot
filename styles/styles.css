@@ -8,8 +8,6 @@ body {
   margin: auto;
   text-align: center;
   font-size: 1em;
-
-
 }
 
 h1,
@@ -45,6 +43,14 @@ form {
 h2:focus, 
 p:focus {
   outline: none;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+}
+
+button {
+  font-family: 'Open Sans', sans-serif;
 }
 
 /*TOP SECTION*/
@@ -118,11 +124,16 @@ p:focus {
   background:#045E55;
 }
 
-.mark-completed-button {
+.gray-text-button {
   color: #FFFFFF;
   background-color: #D1D2D4;
   font-size: 0.8em;
   padding: 2px;
+}
+
+.show-completed {
+  display: block;
+  margin: 0px auto 25px;
 }
 
 /*BOTTOM CONTAINER*/
@@ -132,7 +143,7 @@ p:focus {
 }
 
 .filter-cards {
-  margin: 25px 0px;
+  margin: 25px 0px 15px;
   outline-style: none;
   width: 480px;
 }
