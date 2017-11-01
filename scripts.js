@@ -24,6 +24,16 @@ $('.normal').on('click', showQualityLevel);
 $('.high').on('click', showQualityLevel);
 $('.critical').on('click', showQualityLevel);
 
+// $('.show-completed').toggle(function() {
+//     $(this).val('Hide Completed Tasks');
+// }, function() {
+//     $(this).val('Show Completed Tasks');
+// });
+
+// $('.show-completed').on('click', function() {
+//   $(this).text('hide');
+// });
+
 // function toggleClassCompleted() {
 //   var currentCardId = this.closest('div').id;
 //   $(`#${currentCardId}`).toggleClass( "completed" );
@@ -226,8 +236,8 @@ function showOnLoad() {
     var parsed = JSON.parse(retrieved);
     prependCard(parsed)
     if(parsed.completed === true) {
-      $(`#${localStorage.key(i)}`).addClass( "completed" );
-      $(`#${localStorage.key(i)}`).addClass( "hide" );
+      $(`#${localStorage.key(i)}`).addClass('completed');
+      $(`#${localStorage.key(i)}`).addClass('hide');
     }
   }
 }
@@ -237,9 +247,10 @@ function showCompleted() {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
     if(parsed.completed === true) {
-      $('.card-display').prepend($(`#${localStorage.key(i)}`).removeClass('hide'));
+      $('.card-display').prepend($(`#${localStorage.key(i)}`).toggleClass('hide'));
     }
   }
+  $(this).text($(this).text() == 'Show Completed Tasks' ? 'Hide Completed Tasks' : 'Show Completed Tasks');
 }
 
 function showQualityLevel() {
