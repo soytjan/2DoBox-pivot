@@ -1,6 +1,7 @@
 // PULL EXISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 $(document).ready(function() { 
   showOnLoad();
+  $('.completed').hide();
 });
 
 // SINGLE-LINE EVENT LISTENERS
@@ -15,8 +16,38 @@ $('.card-display').on('keypress', 'p', prevCarriageReturnBody);
 $('.card-display').on('click', '.upvote', upvoteQuality);
 $('.card-display').on('click', '.downvote', downvoteQuality);
 $('.card-display').on('click', '.delete', deleteCards);
-$('.search-cards').on('keyup', searchCards);
+$('.filter-cards').on('keyup', searchCards);
 
+$('.card-display').on('click', '.mark-completed-button', updateCompleted);
+
+// function toggleClassCompleted() {
+//   var currentCardId = this.closest('div').id;
+//   $(`#${currentCardId}`).toggleClass( "completed" );
+// }
+
+// function updateTitle() {
+//   var parentDiv = this.closest('div').id;
+//   var newTitle = this.innerHTML;
+//   // parseAndStringifyUpdates(parentDiv, newTitle);
+//   var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+//   parsedObject.title = newTitle;
+//   var stringifiedObject = JSON.stringify(parsedObject);
+//   localStorage.setItem(parentDiv, stringifiedObject);
+// }
+
+function updateCompleted() {
+  var parentDivId = this.closest('div').id;
+  var parsedObject = JSON.parse(localStorage.getItem(parentDivId));
+  if(parsedObject.completed === false) {
+    parsedObject.completed = true;
+    $(`#${parentDivId}`).addClass('completed');
+  } else {
+    parsedObject.completed = false;
+    $(`#${parentDivId}`).removeClass('completed');
+  }
+  // $(`#${currentCardId}`).toggleClass( "completed" );
+  storeCard(parsedObject);
+}
 
 function prevCarriageReturnTitle() {
   if (event.keyCode === 13) {
@@ -28,6 +59,7 @@ function prevCarriageReturnTitle() {
   }
 }
 
+// make a function to put line 34 and 35 
 function prevCarriageReturnBody() {
   if (event.keyCode === 13) {
     var cardKey = this.closest('div').id;
@@ -38,24 +70,18 @@ function prevCarriageReturnBody() {
   }
 }
 
-// Should we make another function that assigns the input? i.e. title or body
-// function prevCarriageReturn(input) {
-//     if (event.keyCode === 13) {
-//     var cardKey = this.closest('div').id;
-//     var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-//     parsedObject['input'] = this.innerText;
-//     storeCard(parsedObject);
-//     this.blur();
-//   }
-// }
-
+// do it as an array -MICHELLE
 function assignQuality(card) {
-  if (card.quality == 1) {
-    return 'Quality: Swill';
-  } else if (card.quality == 2) {
-    return 'Quality: Plausible';
-  } else if (card.quality == 3) {
-    return 'Quality: Genius';
+  if (card.quality === 1) {
+    return 'Quality: None';
+  } else if (card.quality === 2) {
+    return 'Quality: Low';
+  } else if (card.quality === 3) {
+    return 'Quality: Normal';
+  } else if (card.quality === 4) {
+    return 'Quality: High';
+  } else if (card.quality === 5) {
+    return 'Quality: Critical';
   }
 }
 
@@ -63,7 +89,8 @@ function Card(title, body, id) {
   this.title = title;
   this.body = body;
   this.id = id;
-  this.quality = 1;
+  this.quality = 3;
+  this.completed = false;
 }
 
 function clearInputs() {
@@ -104,12 +131,12 @@ function enableSaveButton() {
   }
 }
 
-function parseAndStringifyUpdates(obj, variable) {
-  var parsedObject = JSON.parse(localStorage.getItem(obj));
-  parsedObject.title = variable;
-  var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentDiv, stringifiedObject);
-}
+// function parseAndStringifyUpdates(objKey, variable) {
+//   var parsedObject = JSON.parse(localStorage.getItem(objKey));
+//   parsedObject.title = variable;
+//   var stringifiedObject = JSON.stringify(parsedObject);
+//   localStorage.setItem(objKey, stringifiedObject);
+// }
 
 function prependCard(card) {
   var quality = assignQuality(card);
@@ -122,21 +149,49 @@ function prependCard(card) {
       <span class="svg upvote" alt="up vote"></span>
       <span class="svg downvote" alt="down vote"></span>
       <span id="quality" class=${card.id}>${quality}</span>
+      <button class="mark-completed-button">Mark Completed</button>
     </div>
     `
   )
 }
 
-// look into making NOT case sensitive
+// look into making NOT case sensitive -- check where it's being called and if it's only being called in one place --rewrite
 function searchCards() {
   var cardsOnDom = Array.from($('.card'));
     cardsOnDom.forEach(function(card) {
       $("p").closest('div').hide();
       $("h2").closest('div').hide();
-      $("p:contains("+$('.search-cards').val()+")").closest('div').show();
-      $("h2:contains("+$('.search-cards').val()+")").closest('div').show();
+      $("p:contains("+$('.filter-cards').val()+")").closest('div').show();
+      $("h2:contains("+$('.filter-cards').val()+")").closest('div').show();
     })
 }
+
+// function searchCards() {
+//   var cardObjectArray = findExistingCards();
+//   var userSearchInput = $('.filter-cards').val().toUpperCase();
+//   var filteredCards = cardObjectsArray.filter(function(object) {
+//     var upperCaseObjBody = object['body'].toUpperCase();
+//     var upperCaseObjTitle = object['title'].toUpperCase();
+//     return upperCaseObjBody.match(userSearchInput) || upperCaseObjTitle.match(userSearchInput);
+//   })
+//   $('.card-display').text('');
+//   populateExistingCards(filteredCards);
+// }
+
+// function findExistingCards() {
+//   var keyValues = [];
+//   var keys = Object.keys(localStorage);
+//   for (var i = 0; i < keys.length; i++) {
+//     keyValues.push(JSON.parse(localStorage.getItem(keys[i])));
+//   }
+//   return keyValues;
+// }
+
+// function populateExistingCards(keyValues) {
+//   for(var i = 0; i < keyValues.length; i++) {
+
+//   }
+// }
 
 function showOnLoad() {
   for (var i = 0; i < localStorage.length; i++) {
@@ -159,30 +214,31 @@ function storeCard(card) {
   localStorage.setItem(card.id, stringifiedCard);
 }
 
+// Take a look at using storeCard function with this
 function updateTitle() {
   var parentDiv = this.closest('div').id;
   var newTitle = this.innerHTML;
-  parseAndStringifyUpdates(parentDiv, newTitle);
-  // var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-  // parsedObject.title = newTitle;
-  // var stringifiedObject = JSON.stringify(parsedObject);
-  // localStorage.setItem(parentDiv, stringifiedObject);
+  // parseAndStringifyUpdates(parentDiv, newTitle);
+  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  parsedObject.title = newTitle;
+  var stringifiedObject = JSON.stringify(parsedObject);
+  localStorage.setItem(parentDiv, stringifiedObject);
 }
 
 function updateBody() {
   var parentDiv = this.closest('div').id;
   var newBody = this.innerHTML;
-  parseAndStringifyUpdates(parentDiv, newBody);
-  // var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-  // parsedObject.body = newBody;
-  // var stringifiedObject = JSON.stringify(parsedObject);
-  // localStorage.setItem(parentDiv, stringifiedObject);
+  // parseAndStringifyUpdates(parentDiv, newBody);
+  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  parsedObject.body = newBody;
+  var stringifiedObject = JSON.stringify(parsedObject);
+  localStorage.setItem(parentDiv, stringifiedObject);
 }
 
 function upvoteQuality() {
   var cardKey = this.closest('div').id;
   var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-  if(parsedObject.quality < 3) {
+  if(parsedObject.quality < 5) {
     parsedObject.quality ++;
   } 
   storeCard(parsedObject);

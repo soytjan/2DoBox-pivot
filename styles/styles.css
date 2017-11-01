@@ -44,6 +44,10 @@ input {
   box-sizing: border-box;
 }
 
+.completed {
+  background-color: magenta;
+}
+
 .card-title {
   display: block;
   outline-style: none;
@@ -103,7 +107,7 @@ input {
   width: 100%;
 }
 
-.search-cards {
+.filter-cards {
   margin: 15px 0px;
   outline-style: none;
   width: 85vh;
@@ -199,7 +203,7 @@ input {
     width: 85%;
   }
   
-  .search-cards {
+  .filter-cards {
     width: 85%;
     border: 1px solid #CCCCCC;  
   }
@@ -229,7 +233,7 @@ input {
     width: 100%;
   }
   
-  .search-cards {
+  .filter-cards {
     width: 85%;
     border: 1px solid #CCCCCC;  
   }
