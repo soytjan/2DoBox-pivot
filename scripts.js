@@ -18,6 +18,11 @@ $('.card-display').on('click', '.delete', deleteCards);
 $('.filter-cards').on('keyup', searchCards);
 $('.card-display').on('click', '.mark-completed-button', updateCompleted);
 $('.show-completed').on('click', showCompleted);
+$('.none').on('click', showQualityLevel);
+$('.low').on('click', showQualityLevel);
+$('.normal').on('click', showQualityLevel);
+$('.high').on('click', showQualityLevel);
+$('.critical').on('click', showQualityLevel);
 
 // function toggleClassCompleted() {
 //   var currentCardId = this.closest('div').id;
@@ -224,7 +229,6 @@ function showOnLoad() {
       $(`#${localStorage.key(i)}`).addClass( "completed" );
       $(`#${localStorage.key(i)}`).addClass( "hide" );
     }
-    // hideCompletedOnLoad(parsed);
   }
 }
 
@@ -238,14 +242,25 @@ function showCompleted() {
   }
 }
 
-function showTen(obj) {
-  var maxCards = 10;
-  if($('.card-display').length > maxCards) {
-    for (var i = 0; i > 10; i++) {
-      this.hide();
+function showQualityLevel() {
+  for (var i = 0; i < localStorage.length; i++) {
+    var retrieved = localStorage.getItem(localStorage.key(i));
+    var parsed = JSON.parse(retrieved);
+    var num = parseInt(this.id);
+    if(parsed.quality !== num) {
+      $(`#${localStorage.key(i)}`).toggleClass('hide-quality');
     } 
-  } 
+  }
 }
+
+// function showTen(obj) {
+//   var maxCards = 10;
+//   if($('.card-display').length > maxCards) {
+//     for (var i = 0; i > 10; i++) {
+//       this.hide();
+//     } 
+//   } 
+// }
 
 function storeAndAppend() {
   event.preventDefault();
