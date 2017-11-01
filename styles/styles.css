@@ -86,6 +86,10 @@ button {
   display: none;
 }
 
+.hide-quality {
+  display: none;
+}
+
 .card-title {
   display: block;
   outline-style: none;
