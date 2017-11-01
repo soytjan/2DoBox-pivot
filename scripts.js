@@ -36,14 +36,14 @@ $('.card-display').on('click', '.mark-completed-button', updateCompleted);
 // }
 
 function updateCompleted() {
-  var parentDivId = this.closest('div').id;
-  var parsedObject = JSON.parse(localStorage.getItem(parentDivId));
+  var parentArticleId = this.closest('article').id;
+  var parsedObject = JSON.parse(localStorage.getItem(parentArticleId));
   if(parsedObject.completed === false) {
     parsedObject.completed = true;
-    $(`#${parentDivId}`).addClass('completed');
+    $(`#${parentArticleId}`).addClass('completed');
   } else {
     parsedObject.completed = false;
-    $(`#${parentDivId}`).removeClass('completed');
+    $(`#${parentArticleId}`).removeClass('completed');
   }
   // $(`#${currentCardId}`).toggleClass( "completed" );
   storeCard(parsedObject);
@@ -51,7 +51,7 @@ function updateCompleted() {
 
 function prevCarriageReturnTitle() {
   if (event.keyCode === 13) {
-    var cardKey = this.closest('div').id;
+    var cardKey = this.closest('article').id;
     var parsedObject = JSON.parse(localStorage.getItem(cardKey));
     parsedObject.title = this.innerText;
     storeCard(parsedObject);
@@ -62,7 +62,7 @@ function prevCarriageReturnTitle() {
 // make a function to put line 34 and 35 
 function prevCarriageReturnBody() {
   if (event.keyCode === 13) {
-    var cardKey = this.closest('div').id;
+    var cardKey = this.closest('article').id;
     var parsedObject = JSON.parse(localStorage.getItem(cardKey));
     parsedObject.body = this.innerText;
     storeCard(parsedObject);
@@ -106,9 +106,9 @@ function createCard() {
 }
 
 function deleteCards() {
-  var parentDiv = this.closest('div').id;
-  localStorage.removeItem(parentDiv);
-  this.closest('div').remove();
+  var parentArticle = this.closest('article').id;
+  localStorage.removeItem(parentArticle);
+  this.closest('article').remove();
 }
 
 function disableButton() {
@@ -142,15 +142,17 @@ function prependCard(card) {
   var quality = assignQuality(card);
   $('.card-display').prepend(
     `
-    <div id=${card.id} class="card">
+    <article id=${card.id} class="card">
       <h2 contenteditable="true">${card.title}</h2>
-      <span class="svg delete" title="delete-button" alt="delete card"></span>
+      <button class="svg delete" title="delete-button" name="delete-button"></button>
       <p contenteditable="true">${card.body}</p>
-      <span class="svg upvote" alt="up vote"></span>
-      <span class="svg downvote" alt="down vote"></span>
-      <span id="quality" class=${card.id}>${quality}</span>
-      <button class="mark-completed-button">Mark Completed</button>
-    </div>
+      <div class="card-bottom-container"> 
+        <span class="svg upvote" name="up-vote-button"></span>
+        <span class="svg downvote" name="down-vote-button"></span>
+        <h3 class="quality"><span class=${card.id}>${quality}</span></h3>
+        <button class="mark-completed-button">Mark Completed</button>
+      </div>  
+    </article>
     `
   )
 }
@@ -159,10 +161,10 @@ function prependCard(card) {
 function searchCards() {
   var cardsOnDom = Array.from($('.card'));
     cardsOnDom.forEach(function(card) {
-      $("p").closest('div').hide();
-      $("h2").closest('div').hide();
-      $("p:contains("+$('.filter-cards').val()+")").closest('div').show();
-      $("h2:contains("+$('.filter-cards').val()+")").closest('div').show();
+      $("p").closest('article').hide();
+      $("h2").closest('article').hide();
+      $("p:contains("+$('.filter-cards').val()+")").closest('article').show();
+      $("h2:contains("+$('.filter-cards').val()+")").closest('article').show();
     })
 }
 
@@ -216,27 +218,28 @@ function storeCard(card) {
 
 // Take a look at using storeCard function with this
 function updateTitle() {
-  var parentDiv = this.closest('div').id;
+  var parentArticle = this.closest('article').id;
   var newTitle = this.innerHTML;
   // parseAndStringifyUpdates(parentDiv, newTitle);
-  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  var parsedObject = JSON.parse(localStorage.getItem(parentArticle));
   parsedObject.title = newTitle;
   var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentDiv, stringifiedObject);
+  localStorage.setItem(parentArticle, stringifiedObject);
 }
 
 function updateBody() {
-  var parentDiv = this.closest('div').id;
+  var parentArticle = this.closest('article').id;
   var newBody = this.innerHTML;
   // parseAndStringifyUpdates(parentDiv, newBody);
-  var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
+  var parsedObject = JSON.parse(localStorage.getItem(parentArticle));
   parsedObject.body = newBody;
   var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentDiv, stringifiedObject);
+  localStorage.setItem(parentArticle, stringifiedObject);
 }
 
 function upvoteQuality() {
-  var cardKey = this.closest('div').id;
+  var cardKey = this.closest('article').id;
+  console.log(this);
   var parsedObject = JSON.parse(localStorage.getItem(cardKey));
   if(parsedObject.quality < 5) {
     parsedObject.quality ++;
@@ -246,7 +249,8 @@ function upvoteQuality() {
 }
 
 function downvoteQuality() {
-  var cardKey = this.closest('div').id;
+  var cardKey = this.closest('article').id;
+  console.log(this);
   var parsedObject = JSON.parse(localStorage.getItem(cardKey));
   if(parsedObject.quality > 1) {
     parsedObject.quality --;
