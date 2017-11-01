@@ -91,8 +91,6 @@ button {
   height: 32px;
 }
 
-
-
 .card-body {
 /*  border-color: #CCCCCC;*/
   display: block;
@@ -146,6 +144,29 @@ button {
   margin: 25px 0px 15px;
   outline-style: none;
   width: 480px;
+}
+
+.filter-button {
+  font-size: 1em;
+  padding: 4px;
+  background-color: #00A79D;
+  color: #FFFFFF;
+  border-radius: 10px;
+  outline-style: none;
+  width: 80px;
+}
+
+.filter-button:hover {
+  background-color: #045E55;
+
+}
+
+.filter-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 550px;
+  margin: 0 auto 15px;
 }
 
 /*card features*/
