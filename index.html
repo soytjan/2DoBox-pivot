@@ -9,20 +9,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <header class="user-input">
-      <h1><span class="title-green">2Do</span>Box</h1>
-      <div class="form-wrapper">
+    <!-- Top Container -->
+    <header class="user-input-section">
+      <h1><span class="green">2Do</span>Box</h1>
+      <section class="form-wrapper">
         <form>
-          <input aria-label="card title input" class="card-title" type="text" name="title" placeholder="Title">
-          <textarea aria-label="card body input" class="card-body" type="text-area" name="body" placeholder="Task"></textarea>
+          <input aria-label="card title input" class="card-title input" type="text" name="title" placeholder=" Title">
+          <textarea aria-label="card body input" class="card-body input" type="text-area" name="body" placeholder=" Task"></textarea>
           <button class="save-button" disabled>save</button>
         </form>
-      </div>
+      </section> 
     </header>
-    <section class="filter-section">
-      <input aria-label="filter bar" class="filter-cards" type="text" name="filterCards" placeholder="Filter">
+    <!-- Bottom Container -->
+    <section>
+      <article class="filter-section">
+        <input aria-label="filter bar" class="filter-cards input" type="text" name="filterCards" placeholder=" Filter">
+      </article>
+      <article class="card-display"></article>
     </section>
-    <section class="card-display"></section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="scripts.js"></script>
   </body>
