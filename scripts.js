@@ -40,14 +40,15 @@ function updateCompleted() {
   var parsedObject = JSON.parse(localStorage.getItem(parentArticleId));
   if(parsedObject.completed === false) {
     parsedObject.completed = true;
-    $(`#${parentArticleId}`).addClass('completed');
+    // $(`#${parentArticleId}`).addClass('completed');
   } else {
     parsedObject.completed = false;
-    $(`#${parentArticleId}`).removeClass('completed');
+    // $(`#${parentArticleId}`).removeClass('completed');
   }
-  // $(`#${currentCardId}`).toggleClass( "completed" );
+  $(`#${parentArticleId}`).toggleClass( "completed" );
   storeCard(parsedObject);
 }
+
 
 function prevCarriageReturnTitle() {
   if (event.keyCode === 13) {
@@ -199,7 +200,16 @@ function showOnLoad() {
   for (var i = 0; i < localStorage.length; i++) {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
-    prependCard(parsed);
+    hideCompletedOnLoad(parsed);
+    // if (parsed.completed === false) {
+    //   prependCard(parsed)
+    // }
+  }
+}
+
+function hideCompletedOnLoad(obj) {
+  if(obj.completed === false) {
+    prependCard(obj);
   }
 }
 
