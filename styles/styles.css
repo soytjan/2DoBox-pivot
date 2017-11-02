@@ -144,6 +144,10 @@ button {
 
 /*BOTTOM CONTAINER*/
 
+.card-display article:nth-child(n+11) {
+  display: none;
+}
+
 .card-display{
   width: 100%;
 }
