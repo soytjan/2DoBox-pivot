@@ -79,7 +79,7 @@ button {
 }
 
 .completed {
-  background-color: magenta;
+  background-color: #d9dadd;
 }
 
 .hide {
@@ -110,7 +110,7 @@ button {
   resize: none;
 }
 
-.save-button{
+.save-button {
   background: #00A79D;
   color: white;
   display: block;
@@ -127,20 +127,38 @@ button {
 }
 
 .save-button:hover{
-  background:#045E55;
+  background: #045E55;
 }
 
-.gray-text-button {
-  color: #FFFFFF;
-  background-color: #D1D2D4;
-  font-size: 0.8em;
-  padding: 2px;
+.gray-outline {
+  color: #6D6E71;
+  padding: 3px;
+  border-radius: 0px;
+  border: 1px solid #D1D3D4;
+  background-color: #FFFFFF;
+}
+
+.gray-outline:hover {
+  background-color: #00A79D;
 }
 
 .show-completed {
+  font-size: 1em;
   display: block;
-  margin: 0px auto 25px;
+  margin: 0px auto 20px;
+  padding: 4px;
 }
+
+.mark-completed-button {
+  font-size: 0.8em;
+  margin-right: 20px;
+}
+
+.show-more-button {
+  font-size: 1em;
+  padding: 4px;
+}
+
 
 /*BOTTOM CONTAINER*/
 
@@ -149,7 +167,7 @@ button {
 }
 
 .filter-cards {
-  margin: 25px 0px 15px;
+  margin: 0px 0px 15px;
   outline-style: none;
   width: 480px;
 }
@@ -157,16 +175,16 @@ button {
 .filter-button {
   font-size: 1em;
   padding: 4px;
-  background-color: #00A79D;
-  color: #FFFFFF;
-  border-radius: 10px;
+  color: #939598;
+  background-color: #FFFFFF;
+  border-radius: 0px;
   outline-style: none;
   width: 80px;
+  border: none;
 }
 
 .filter-button:hover {
-  background-color: #045E55;
-
+  border: 2px solid #00A79D;
 }
 
 .filter-button-container {
@@ -174,7 +192,7 @@ button {
   flex-direction: row;
   justify-content: space-around;
   width: 550px;
-  margin: 0 auto 15px;
+  margin: 25px auto 15px;
 }
 
 /*card features*/
@@ -244,7 +262,14 @@ button {
 .card-bottom-container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.quality-container {
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .quality {
