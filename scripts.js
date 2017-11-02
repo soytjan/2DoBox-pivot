@@ -1,9 +1,7 @@
-// PULL EXISTING IDEAS OUT OF STORAGE AND APPEND ON PAGE
 $(document).ready(function() { 
   showOnLoad();
 });
 
-// SINGLE-LINE EVENT LISTENERS
 $('.card-title').keyup(enableSaveButton);
 $('.card-body').keyup(enableSaveButton);
 $('.card-body').on('keypress', enableEnterButton);
@@ -23,31 +21,11 @@ $('.low').on('click', showQualityLevel);
 $('.normal').on('click', showQualityLevel);
 $('.high').on('click', showQualityLevel);
 $('.critical').on('click', showQualityLevel);
+$('.show-more-button').on('click', showMoreCards);
 
-// $('.show-completed').toggle(function() {
-//     $(this).val('Hide Completed Tasks');
-// }, function() {
-//     $(this).val('Show Completed Tasks');
-// });
-
-// $('.show-completed').on('click', function() {
-//   $(this).text('hide');
-// });
-
-// function toggleClassCompleted() {
-//   var currentCardId = this.closest('div').id;
-//   $(`#${currentCardId}`).toggleClass( "completed" );
-// }
-
-// function updateTitle() {
-//   var parentDiv = this.closest('div').id;
-//   var newTitle = this.innerHTML;
-//   // parseAndStringifyUpdates(parentDiv, newTitle);
-//   var parsedObject = JSON.parse(localStorage.getItem(parentDiv));
-//   parsedObject.title = newTitle;
-//   var stringifiedObject = JSON.stringify(parsedObject);
-//   localStorage.setItem(parentDiv, stringifiedObject);
-// }
+function showMoreCards() {
+  $('.card-display article').show();  
+}
 
 
 function updateCompleted() {
@@ -62,7 +40,6 @@ function updateCompleted() {
   }
   storeCard(parsedObject);
 }
-
 
 function prevCarriageReturnTitle() {
   if (event.keyCode === 13) {
@@ -85,7 +62,6 @@ function prevCarriageReturnBody() {
   }
 }
 
-// do it as an array -MICHELLE
 function assignQuality(card) {
   if (card.quality === 1) {
     return 'Quality: None';
@@ -146,29 +122,11 @@ function enableSaveButton() {
   }
 }
 
-// function hideCompletedOnLoad(obj) {
-//   if(obj.completed === false) {
-//     prependCard(obj);
-//   }
-// }
-
 // function parseAndStringifyUpdates(objKey, variable) {
 //   var parsedObject = JSON.parse(localStorage.getItem(objKey));
 //   parsedObject.title = variable;
 //   var stringifiedObject = JSON.stringify(parsedObject);
 //   localStorage.setItem(objKey, stringifiedObject);
-// }
-
-// Make a different class to hide the 
-
-// function parseCompletedAndShow() {
-//   for (var i = 0; i < localStorage.length; i++) {
-//     var retrieved = localStorage.getItem(localStorage.key(i));
-//     var parsed = JSON.parse(retrieved);
-//     // $(`#${parentArticleId}`).toggleClass( "completed" )
-//     console.log(this);
-//     // showCompleted(parsed);
-//   }
 // }
 
 function prependCard(card) {
@@ -228,13 +186,11 @@ function searchCards() {
 //   }
 // }
 
-// Apply a class to hide and use display: none; 
-
 function showOnLoad() {
   for (var i = 0; i < localStorage.length; i++) {
     var retrieved = localStorage.getItem(localStorage.key(i));
     var parsed = JSON.parse(retrieved);
-    prependCard(parsed)
+    prependCard(parsed);
     if(parsed.completed === true) {
       $(`#${localStorage.key(i)}`).addClass('completed');
       $(`#${localStorage.key(i)}`).addClass('hide');
@@ -264,14 +220,7 @@ function showQualityLevel() {
   }
 }
 
-// function showTen(obj) {
-//   var maxCards = 10;
-//   if($('.card-display').length > maxCards) {
-//     for (var i = 0; i > 10; i++) {
-//       this.hide();
-//     } 
-//   } 
-// }
+
 
 function storeAndAppend() {
   event.preventDefault();
@@ -290,7 +239,6 @@ function storeCard(card) {
 function updateTitle() {
   var parentArticle = this.closest('article').id;
   var newTitle = this.innerHTML;
-  // parseAndStringifyUpdates(parentDiv, newTitle);
   var parsedObject = JSON.parse(localStorage.getItem(parentArticle));
   parsedObject.title = newTitle;
   var stringifiedObject = JSON.stringify(parsedObject);
@@ -300,7 +248,6 @@ function updateTitle() {
 function updateBody() {
   var parentArticle = this.closest('article').id;
   var newBody = this.innerHTML;
-  // parseAndStringifyUpdates(parentDiv, newBody);
   var parsedObject = JSON.parse(localStorage.getItem(parentArticle));
   parsedObject.body = newBody;
   var stringifiedObject = JSON.stringify(parsedObject);
