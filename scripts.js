@@ -26,50 +26,7 @@ $('.show-completed').on('click', showCompleted);
 
 
 function activeState() {
-  if ($(this).hasClass('active')) {
-    $(this).removeClass('active');
-  } else {
-    $(this).addClass('active');
-  }
-}
-
-function showMoreCards() {
-  $('.card-display article').show();  
-}
-
-
-function updateCompleted() {
-  var parentArticleId = this.closest('article').id;
-  var parsedObject = JSON.parse(localStorage.getItem(parentArticleId));
-  if(parsedObject.completed === false) {
-    parsedObject.completed = true;
-    $(`#${parentArticleId}`).addClass('completed');
-  } else {
-    parsedObject.completed = false;
-    $(`#${parentArticleId}`).removeClass('completed');
-  }
-  storeCard(parsedObject);
-}
-
-function prevCarriageReturnTitle() {
-  if (event.keyCode === 13) {
-    var cardKey = this.closest('article').id;
-    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-    parsedObject.title = this.innerText;
-    storeCard(parsedObject);
-    this.blur();
-  }
-}
-
-// make a function to put line 34 and 35 
-function prevCarriageReturnBody() {
-  if (event.keyCode === 13) {
-    var cardKey = this.closest('article').id;
-    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-    parsedObject.body = this.innerText;
-    storeCard(parsedObject);
-    this.blur();
-  }
+  $(this).toggleClass('active');
 }
 
 function assignImportance(card) {
@@ -85,6 +42,32 @@ function assignImportance(card) {
     return 'importance: critical';
   }
 }
+
+function showMoreCards() {
+  $('.card-display article').show();  
+}
+
+function prevCarriageReturnTitle() {
+  if (event.keyCode === 13) {
+    var cardKey = this.closest('article').id;
+    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
+    parsedObject.title = this.innerText;
+    storeCard(parsedObject);
+    this.blur();
+  }
+}
+ 
+function prevCarriageReturnBody() {
+  if (event.keyCode === 13) {
+    var cardKey = this.closest('article').id;
+    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
+    parsedObject.body = this.innerText;
+    storeCard(parsedObject);
+    this.blur();
+  }
+}
+
+
 
 function Card(title, body, id) {
   this.title = title;
@@ -131,13 +114,6 @@ function enableSaveButton() {
     disableButton();
   }
 }
-
-// function parseAndStringifyUpdates(objKey, variable) {
-//   var parsedObject = JSON.parse(localStorage.getItem(objKey));
-//   parsedObject.title = variable;
-//   var stringifiedObject = JSON.stringify(parsedObject);
-//   localStorage.setItem(objKey, stringifiedObject);
-// }
 
 function prependCard(card) {
   var quality = assignImportance(card);
@@ -245,14 +221,12 @@ function storeCard(card) {
   localStorage.setItem(card.id, stringifiedCard);
 }
 
-// Take a look at using storeCard function with this
 function updateTitle() {
   var parentArticle = this.closest('article').id;
   var newTitle = this.innerHTML;
   var parsedObject = JSON.parse(localStorage.getItem(parentArticle));
   parsedObject.title = newTitle;
-  var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentArticle, stringifiedObject);
+  storeCard(parsedObject);
 }
 
 function updateBody() {
@@ -260,8 +234,20 @@ function updateBody() {
   var newBody = this.innerHTML;
   var parsedObject = JSON.parse(localStorage.getItem(parentArticle));
   parsedObject.body = newBody;
-  var stringifiedObject = JSON.stringify(parsedObject);
-  localStorage.setItem(parentArticle, stringifiedObject);
+  storeCard(parsedObject);
+}
+
+function updateCompleted() {
+  var parentArticleId = this.closest('article').id;
+  var parsedObject = JSON.parse(localStorage.getItem(parentArticleId));
+  if(parsedObject.completed === false) {
+    parsedObject.completed = true;
+    $(`#${parentArticleId}`).addClass('completed');
+  } else {
+    parsedObject.completed = false;
+    $(`#${parentArticleId}`).removeClass('completed');
+  }
+  storeCard(parsedObject);
 }
 
 function upvoteQuality() {
