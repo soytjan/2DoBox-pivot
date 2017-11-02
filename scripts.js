@@ -64,15 +64,15 @@ function prevCarriageReturnBody() {
 
 function assignQuality(card) {
   if (card.quality === 1) {
-    return 'Quality: None';
+    return 'quality: none';
   } else if (card.quality === 2) {
-    return 'Quality: Low';
+    return 'quality: low';
   } else if (card.quality === 3) {
-    return 'Quality: Normal';
+    return 'quality: normal';
   } else if (card.quality === 4) {
-    return 'Quality: High';
+    return 'quality: high';
   } else if (card.quality === 5) {
-    return 'Quality: Critical';
+    return 'quality: critical';
   }
 }
 
@@ -137,12 +137,14 @@ function prependCard(card) {
       <h2 contenteditable="true">${card.title}</h2>
       <button class="svg delete" title="delete-button" name="delete-button"></button>
       <p contenteditable="true">${card.body}</p>
-      <div class="card-bottom-container"> 
-        <span class="svg upvote" name="up-vote-button"></span>
-        <span class="svg downvote" name="down-vote-button"></span>
-        <h3 class="quality"><span class=${card.id}>${quality}</span></h3>
-        <button class="mark-completed-button gray-text-button">Mark Completed</button>
-      </div>  
+      <div class="card-bottom-container">
+        <div class="quality-container"> 
+          <span class="svg upvote" name="up-vote-button"></span>
+          <span class="svg downvote" name="down-vote-button"></span>
+          <h3 class="quality"><span class=${card.id}>${quality}</span></h3>
+        </div>
+        <button class="mark-completed-button gray-outline">Mark Completed</button>
+      </div>    
     </article>
     `
   )
