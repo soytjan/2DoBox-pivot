@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 $('.card-title').keyup(enableSaveButton);
 $('.card-body').keyup(enableSaveButton);
+$('.show-more-button').on('click', showMoreCards);
 $('.card-body').on('keypress', enableEnterButton);
 $('.save-button').on('click', storeAndAppend);
 $('.card-display').on('blur', 'h2', updateTitle);
@@ -13,6 +14,7 @@ $('.card-display').on('keypress', 'p', prevCarriageReturnBody);
 $('.card-display').on('click', '.upvote', upvoteQuality);
 $('.card-display').on('click', '.downvote', downvoteQuality);
 $('.card-display').on('click', '.delete', deleteCards);
+$('.show-completed').on('click', showCompleted);
 $('.card-display').on('click', '.mark-completed-button', updateCompleted);
 $('.filter-cards').on('keyup', searchCards);
 $('.none').on('click', showQualityLevel);
@@ -20,9 +22,8 @@ $('.low').on('click', showQualityLevel);
 $('.normal').on('click', showQualityLevel);
 $('.high').on('click', showQualityLevel);
 $('.critical').on('click', showQualityLevel);
-$('.show-more-button').on('click', showMoreCards);
 $('.filter-button').on('click', activeState);
-$('.show-completed').on('click', showCompleted);
+
 
 
 function activeState() {
