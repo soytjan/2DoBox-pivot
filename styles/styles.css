@@ -82,6 +82,10 @@ button {
   background-color: #d9dadd;
 }
 
+.completed .mark-completed-button {
+  display: none;
+}
+
 .hide {
   display: none;
 }
@@ -145,8 +149,9 @@ button {
 .show-completed {
   font-size: 1em;
   display: block;
-  margin: 0px auto 20px;
+  margin: 0px auto 40px;
   padding: 4px;
+  width: 480px;
 }
 
 .mark-completed-button {
@@ -157,6 +162,7 @@ button {
 .show-more-button {
   font-size: 1em;
   padding: 4px;
+  width: 480px;
 }
 
 
@@ -187,15 +193,18 @@ button {
   border: none;
 }
 
-.filter-button:hover {
+.filter-button:hover,{
   border: 2px solid #00A79D;
+}
+.active {
+  border: 2px solid #00A79D; 
 }
 
 .filter-button-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 550px;
+  width: 544px;
   margin: 25px auto 15px;
 }
 
@@ -284,7 +293,7 @@ button {
 
 /*Media Queries*/
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 563px) {
   body {
     margin: 0 auto;
   }
@@ -309,6 +318,10 @@ button {
     width: 85%;
   }
   
+  .filter-button-container{
+    width: 95%;
+  }
+
   .filter-cards {
     width: 85%;
     border: 1px solid #CCCCCC;  
@@ -316,6 +329,21 @@ button {
 
   .card {
     width: 85%;
+  }
+
+  .show-completed,
+  .show-more-button {
+    width: 85%;
+  }
+}
+@media screen and(max-width: 400px) {
+  .mark-completed-button {
+    display: block;
+    width: 85%;
+  }
+
+  .quality-container {
+    display: block;
   }
 }
 
@@ -344,7 +372,26 @@ button {
     border: 1px solid #CCCCCC;  
   }
 
+  .filter-button {
+    margin: 10px auto;
+  }
+
+  .filter-button-container {
+    display: block;
+    text-align: center;
+  }
+
   .card {
+    width: 85%;
+  }
+
+  .show-completed{
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 172px) {
+  .filter-button {
     width: 85%;
   }
 }

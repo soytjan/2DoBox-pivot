@@ -13,15 +13,25 @@ $('.card-display').on('keypress', 'p', prevCarriageReturnBody);
 $('.card-display').on('click', '.upvote', upvoteQuality);
 $('.card-display').on('click', '.downvote', downvoteQuality);
 $('.card-display').on('click', '.delete', deleteCards);
-$('.filter-cards').on('keyup', searchCards);
 $('.card-display').on('click', '.mark-completed-button', updateCompleted);
-$('.show-completed').on('click', showCompleted);
+$('.filter-cards').on('keyup', searchCards);
 $('.none').on('click', showQualityLevel);
 $('.low').on('click', showQualityLevel);
 $('.normal').on('click', showQualityLevel);
 $('.high').on('click', showQualityLevel);
 $('.critical').on('click', showQualityLevel);
 $('.show-more-button').on('click', showMoreCards);
+$('.filter-button').on('click', activeState);
+$('.show-completed').on('click', showCompleted);
+
+
+function activeState() {
+  if ($(this).hasClass('active')) {
+    $(this).removeClass('active');
+  } else {
+    $(this).addClass('active');
+  }
+}
 
 function showMoreCards() {
   $('.card-display article').show();  
@@ -33,10 +43,10 @@ function updateCompleted() {
   var parsedObject = JSON.parse(localStorage.getItem(parentArticleId));
   if(parsedObject.completed === false) {
     parsedObject.completed = true;
-    $(`#${parentArticleId}`).addClass( "completed" );
+    $(`#${parentArticleId}`).addClass('completed');
   } else {
     parsedObject.completed = false;
-    $(`#${parentArticleId}`).removeClass( "completed" );
+    $(`#${parentArticleId}`).removeClass('completed');
   }
   storeCard(parsedObject);
 }
@@ -62,17 +72,17 @@ function prevCarriageReturnBody() {
   }
 }
 
-function assignQuality(card) {
+function assignImportance(card) {
   if (card.quality === 1) {
-    return 'quality: none';
+    return 'importance: none';
   } else if (card.quality === 2) {
-    return 'quality: low';
+    return 'importance: low';
   } else if (card.quality === 3) {
-    return 'quality: normal';
+    return 'importance: normal';
   } else if (card.quality === 4) {
-    return 'quality: high';
+    return 'importance: high';
   } else if (card.quality === 5) {
-    return 'quality: critical';
+    return 'importance: critical';
   }
 }
 
@@ -130,7 +140,7 @@ function enableSaveButton() {
 // }
 
 function prependCard(card) {
-  var quality = assignQuality(card);
+  var quality = assignImportance(card);
   $('.card-display').prepend(
     `
     <article id=${card.id} class="card">
@@ -222,8 +232,6 @@ function showQualityLevel() {
   }
 }
 
-
-
 function storeAndAppend() {
   event.preventDefault();
   createCard();
@@ -263,7 +271,7 @@ function upvoteQuality() {
     parsedObject.quality ++;
   } 
   storeCard(parsedObject);
-  $(`.${parsedObject.id}`).text(assignQuality(parsedObject));
+  $(`.${parsedObject.id}`).text(assignImportance(parsedObject));
 }
 
 function downvoteQuality() {
@@ -273,5 +281,5 @@ function downvoteQuality() {
     parsedObject.quality --;
   } 
   storeCard(parsedObject);
-  $(`.${parsedObject.id}`).text(assignQuality(parsedObject));
+  $(`.${parsedObject.id}`).text(assignImportance(parsedObject));
 }
