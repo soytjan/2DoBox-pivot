@@ -45,6 +45,10 @@ p:focus {
   outline: none;
 }
 
+p {
+  font-family: 'Open Sans', sans-serif;
+}
+
 /*TOP SECTION*/
 
 .input {
