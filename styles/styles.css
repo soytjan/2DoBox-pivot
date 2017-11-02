@@ -202,7 +202,6 @@ p:focus {
   margin: 0vh auto 5vh auto;
   padding-bottom: 3vh; 
   text-align: left;
-/*  width: 480px;*/
   }
 
 
@@ -213,8 +212,7 @@ p:focus {
 }
 
 .svg {
-/*  background-repeat: no-repeat;
-*/  border: none;
+  border: none;
   border-style: none;
   box-sizing: content-box;
   height: 26px;
