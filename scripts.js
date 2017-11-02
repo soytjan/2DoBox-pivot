@@ -20,10 +20,9 @@ $('.low').on('click', showQualityLevel);
 $('.normal').on('click', showQualityLevel);
 $('.high').on('click', showQualityLevel);
 $('.critical').on('click', showQualityLevel);
-$('.show-more-button').on('click', showMoreCards);
 $('.filter-button').on('click', activeState);
 $('.show-completed').on('click', showCompleted);
-
+$('.show-more-button').on('click', showMoreCards);
 
 function activeState() {
   $(this).toggleClass('active');
@@ -42,32 +41,6 @@ function assignImportance(card) {
     return 'importance: critical';
   }
 }
-
-function showMoreCards() {
-  $('.card-display article').show();  
-}
-
-function prevCarriageReturnTitle() {
-  if (event.keyCode === 13) {
-    var cardKey = this.closest('article').id;
-    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-    parsedObject.title = this.innerText;
-    storeCard(parsedObject);
-    this.blur();
-  }
-}
- 
-function prevCarriageReturnBody() {
-  if (event.keyCode === 13) {
-    var cardKey = this.closest('article').id;
-    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
-    parsedObject.body = this.innerText;
-    storeCard(parsedObject);
-    this.blur();
-  }
-}
-
-
 
 function Card(title, body, id) {
   this.title = title;
@@ -136,7 +109,26 @@ function prependCard(card) {
   )
 }
 
-// look into making NOT case sensitive -- check where it's being called and if it's only being called in one place --rewrite
+function prevCarriageReturnTitle() {
+  if (event.keyCode === 13) {
+    var cardKey = this.closest('article').id;
+    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
+    parsedObject.title = this.innerText;
+    storeCard(parsedObject);
+    this.blur();
+  }
+}
+ 
+function prevCarriageReturnBody() {
+  if (event.keyCode === 13) {
+    var cardKey = this.closest('article').id;
+    var parsedObject = JSON.parse(localStorage.getItem(cardKey));
+    parsedObject.body = this.innerText;
+    storeCard(parsedObject);
+    this.blur();
+  }
+}
+
 function searchCards() {
   var cardsOnDom = Array.from($('.card'));
     cardsOnDom.forEach(function(card) {
@@ -146,33 +138,6 @@ function searchCards() {
       $("h2:contains("+$('.filter-cards').val()+")").closest('article').show();
     })
 }
-
-// function searchCards() {
-//   var cardObjectArray = findExistingCards();
-//   var userSearchInput = $('.filter-cards').val().toUpperCase();
-//   var filteredCards = cardObjectsArray.filter(function(object) {
-//     var upperCaseObjBody = object['body'].toUpperCase();
-//     var upperCaseObjTitle = object['title'].toUpperCase();
-//     return upperCaseObjBody.match(userSearchInput) || upperCaseObjTitle.match(userSearchInput);
-//   })
-//   $('.card-display').text('');
-//   populateExistingCards(filteredCards);
-// }
-
-// function findExistingCards() {
-//   var keyValues = [];
-//   var keys = Object.keys(localStorage);
-//   for (var i = 0; i < keys.length; i++) {
-//     keyValues.push(JSON.parse(localStorage.getItem(keys[i])));
-//   }
-//   return keyValues;
-// }
-
-// function populateExistingCards(keyValues) {
-//   for(var i = 0; i < keyValues.length; i++) {
-
-//   }
-// }
 
 function showOnLoad() {
   for (var i = 0; i < localStorage.length; i++) {
@@ -195,6 +160,16 @@ function showCompleted() {
     }
   }
   $(this).text($(this).text() == 'Show Completed Tasks' ? 'Hide Completed Tasks' : 'Show Completed Tasks');
+}
+
+function showMoreCards() { 
+  for (var i = 0; i < localStorage.length; i++) {
+    var retrieved = localStorage.getItem(localStorage.key(i));
+    var parsed = JSON.parse(retrieved);
+    if(parsed.completed === false) {
+      $(`#${localStorage.key(i)}`).show();
+    }
+  }
 }
 
 function showQualityLevel() {
