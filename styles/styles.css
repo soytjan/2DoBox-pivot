@@ -46,6 +46,7 @@ p:focus {
 }
 
 /*TOP SECTION*/
+
 .input {
   border: 2px solid #D1D3D4;
 
@@ -79,6 +80,7 @@ p:focus {
   display: none;
 }
 
+.card-body,
 .card-title {
   display: block;
   height: 32px;
@@ -88,14 +90,9 @@ p:focus {
   width: 480px;
 }
 
+
 .card-body {
-  display: block;
-  height: 32px;
-  margin: 0 auto 15px;
-  outline-style: none;
-  padding: 2px;
   resize: none;
-  width: 480px;
 }
 
 .save-button {
@@ -146,7 +143,6 @@ p:focus {
 .show-more-button {
   font-size: 1em;
   padding: 4px;
-  width: 480px;
 }
 
 
@@ -162,7 +158,16 @@ p:focus {
 
 .filter-cards {
   margin: 0px 0px 15px;
+}
+
+.filter-cards,
+.filter-button {
   outline-style: none;
+}
+
+.filter-cards, 
+.card, 
+.show-more-button {
   width: 480px;
 }
 
@@ -172,7 +177,6 @@ p:focus {
   border-radius: 0px;
   color: #939598;
   font-size: 1em;
-  outline-style: none;
   padding: 4px;
   width: 80px;
 }
@@ -198,7 +202,7 @@ p:focus {
   margin: 0vh auto 5vh auto;
   padding-bottom: 3vh; 
   text-align: left;
-  width: 480px;
+/*  width: 480px;*/
   }
 
 
@@ -209,13 +213,14 @@ p:focus {
 }
 
 .svg {
-  border: none;
+/*  background-repeat: no-repeat;
+*/  border: none;
   border-style: none;
   box-sizing: content-box;
   height: 26px;
   padding: 0px 15px 0px 0px;
   width: 26px;
-  }
+}
 
 .svg.delete {
   background: url("../images/delete.svg");
@@ -251,15 +256,17 @@ p:focus {
 }
 
 .card-bottom-container {
+  justify-content: space-between;
+}
+
+.card-bottom-container,
+.quality-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .quality-container {
   align-items: center;
-  display: flex;
-  flex-direction: row;
   justify-content: flex-start;
 }
 
@@ -276,9 +283,19 @@ p:focus {
     margin: 0 auto;
   }
 
+  .card-title,
+  .card-body,
+  .save-button,
+  .filter-cards,
+  .card,
+  .show-completed,
+  .show-more-button {
+    width: 85%;
+  }
+
+
   .card-title {
     font-size: 20px;
-    width: 85%;
   }
 
   .card-body {
@@ -291,10 +308,6 @@ p:focus {
   .card-display {
     width: 100%;
   }
-
-  .save-button {
-    width: 85%;
-  }
   
   .filter-button-container{
     width: 95%;
@@ -302,26 +315,6 @@ p:focus {
 
   .filter-cards {
     border: 1px solid #CCCCCC;  
-    width: 85%;
-  }
-
-  .card {
-    width: 85%;
-  }
-
-  .show-completed,
-  .show-more-button {
-    width: 85%;
-  }
-}
-@media screen and(max-width: 400px) {
-  .mark-completed-button {
-    display: block;
-    width: 85%;
-  }
-
-  .quality-container {
-    display: block;
   }
 }
 
